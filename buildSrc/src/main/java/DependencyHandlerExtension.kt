@@ -12,9 +12,7 @@ fun DependencyHandler.navigationComponent() {
 }
 
 fun DependencyHandler.dagger() {
-    api(Dependency.dagger)
-    api(Dependency.daggerAndroid)
-    kapt(Dependency.daggerAndroidProcessor)
+    implementation(Dependency.dagger)
     kapt(Dependency.daggerCompiler)
 }
 

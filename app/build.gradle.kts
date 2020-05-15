@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -27,10 +28,12 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(project(Module.common))
     implementation(Dependency.kotlinJdk7)
     implementation(Dependency.constraintLayout)
     appCompat()
     navigationComponent()
+    dagger()
 
     // Unit Test
     testImplementation(Dependency.junit)

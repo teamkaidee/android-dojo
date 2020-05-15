@@ -12,8 +12,6 @@ object Dependency {
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Version.rxAndroid}"
     const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.androidLifecycle}"
     const val dagger = "com.google.dagger:dagger:${Version.dagger}"
-    const val daggerAndroid = "com.google.dagger:dagger-android:${Version.dagger}"
-    const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Version.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Version.dagger}"
 
     // Unit Test
