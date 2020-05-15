@@ -11,6 +11,13 @@ fun DependencyHandler.navigationComponent() {
     implementation(Dependency.navFeature)
 }
 
+fun DependencyHandler.dagger() {
+    api(Dependency.dagger)
+    api(Dependency.daggerAndroid)
+    kapt(Dependency.daggerAndroidProcessor)
+    kapt(Dependency.daggerCompiler)
+}
+
 fun DependencyHandler.implementation(depName: String) {
     add("implementation", depName)
 }

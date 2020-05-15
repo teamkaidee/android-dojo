@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -21,4 +22,5 @@ dependencies {
     implementation(Dependency.kotlinJdk7)
     implementation(Dependency.rxKotlin)
     implementation(Dependency.rxAndroid)
+    dagger()
 }

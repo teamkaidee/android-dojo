@@ -10,6 +10,7 @@ object Version {
     const val rxKotlin = "2.4.0"
     const val rxAndroid = "2.1.1"
     const val androidLifecycle = "2.2.0"
+    const val dagger = "2.27"
 
     const val junit = "4.12"
     const val androidXJunit = "1.1.1"
