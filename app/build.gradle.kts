@@ -6,6 +6,7 @@ plugins {
 
 android {
     compileSdkVersion(ApplicationConfig.targetSdkVersion)
+    buildToolsVersion(ApplicationConfig.buildToolVersion)
     defaultConfig {
         applicationId = ApplicationConfig.applicationId
         minSdkVersion(ApplicationConfig.minSdkVersion)
@@ -21,7 +22,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-
 }
 
 dependencies {

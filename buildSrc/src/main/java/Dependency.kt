@@ -10,6 +10,9 @@ object Dependency {
     const val navFragment = "androidx.navigation:navigation-fragment-ktx:${Version.navigationComponent}"
     const val navUi = "androidx.navigation:navigation-ui-ktx:${Version.navigationComponent}"
     const val navFeature = "androidx.navigation:navigation-dynamic-features-fragment:${Version.navigationComponent}"
+    const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Version.rxKotlin}"
+    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Version.rxAndroid}"
+    const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.androidLifecycle}"
 
     // Unit Test
     const val junit = "junit:junit:${Version.junit}"
