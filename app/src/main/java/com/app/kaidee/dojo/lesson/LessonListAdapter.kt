@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.item_lesson.view.*
 
 class LessonListAdapter : ListAdapter<Lesson, LessonListAdapter.LessonViewHolder>(DiffCallBack()) {
 
+    var onItemClickListener: ((Int) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
         return LessonViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_lesson, parent, false)
@@ -21,12 +23,15 @@ class LessonListAdapter : ListAdapter<Lesson, LessonListAdapter.LessonViewHolder
         holder.bind(getItem(position))
     }
 
-    class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(lesson: Lesson) {
             with(itemView) {
                 title.text = lesson.title
                 description.text = lesson.description
+                setOnClickListener {
+                    onItemClickListener?.invoke(lesson.navigationId)
+                }
             }
         }
 

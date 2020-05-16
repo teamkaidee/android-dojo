@@ -3,6 +3,7 @@ package com.app.kaidee.dojo.lesson
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.kaidee.dojo.R
 import javax.inject.Inject
 
 class LessonViewModel @Inject constructor() : ViewModel() {
@@ -22,7 +23,7 @@ class LessonViewModel @Inject constructor() : ViewModel() {
             Lesson(
                 title = "MVI Counter Example",
                 description = "Introduce basic concept of MVI Architecture Pattern",
-                navigationId = 0
+                navigationId = R.id.action_lesson_to_counter
             )
         )
     }

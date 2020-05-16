@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.kaidee.dojo.R
 import kotlinx.android.synthetic.main.fragment_lesson.*
@@ -30,6 +31,9 @@ class LessonFragment : Fragment() {
     private fun setupView() {
         recycleview_lessons.layoutManager = LinearLayoutManager(context)
         recycleview_lessons.adapter = lessonListAdapter
+        lessonListAdapter.onItemClickListener = { navigationId ->
+            findNavController().navigate(navigationId)
+        }
     }
 
     private fun observeViewModel() {
