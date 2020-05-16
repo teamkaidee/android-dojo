@@ -11,6 +11,7 @@ object Dependency {
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Version.rxKotlin}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Version.rxAndroid}"
     const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.androidLifecycle}"
+    const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Version.androidLifecycle}"
     const val dagger = "com.google.dagger:dagger:${Version.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Version.dagger}"
 

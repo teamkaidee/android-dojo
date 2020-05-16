@@ -12,7 +12,7 @@ android {
         targetSdkVersion(ApplicationConfig.targetSdkVersion)
     }
     buildTypes {
-        getByName("release") {
+        getByName(BuildType.release) {
             isMinifyEnabled = false
         }
     }
@@ -22,5 +22,6 @@ dependencies {
     implementation(Dependency.kotlinJdk7)
     implementation(Dependency.rxKotlin)
     implementation(Dependency.rxAndroid)
+    implementation(Dependency.viewModel)
     dagger()
 }

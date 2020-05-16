@@ -1,3 +1,4 @@
 include(Module.app)
-include(Module.arch)
-include(Module.common)
+include(Module.Core.arch)
+include(Module.Core.common)
+include(Module.Feature.counter)

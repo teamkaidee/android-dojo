@@ -18,27 +18,32 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        getByName(BuildType.release) {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    dynamicFeatures = mutableSetOf(Module.Feature.counter)
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
-    implementation(project(Module.common))
+    implementation(project(Module.Core.common))
     implementation(Dependency.kotlinJdk7)
     implementation(Dependency.constraintLayout)
+    implementation(Dependency.viewModel)
+    implementation(Dependency.liveData)
     appCompat()
     navigationComponent()
     dagger()
 
-    // Unit Test
     testImplementation(Dependency.junit)
 
-    // UI Test
     androidTestImplementation(Dependency.androidXJunit)
     androidTestImplementation(Dependency.espresso)
 }

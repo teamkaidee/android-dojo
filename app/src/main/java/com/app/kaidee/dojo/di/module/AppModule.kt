@@ -1,18 +1,21 @@
 package com.app.kaidee.dojo.di.module
 
+import androidx.lifecycle.ViewModelProvider
+import com.app.kaidee.common.di.factory.ViewModelFactory
 import com.app.kaidee.common.rxscheduler.DefaultSchedulerProvider
 import com.app.kaidee.common.rxscheduler.SchedulerProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+abstract class AppModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideSchedulerProvider(): SchedulerProvider {
-        return DefaultSchedulerProvider()
-    }
+    abstract fun bindSchedulerProvider(impl: DefaultSchedulerProvider): SchedulerProvider
+
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }
