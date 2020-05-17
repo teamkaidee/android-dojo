@@ -12,7 +12,6 @@ class GenerateGoalReducer @Inject constructor() : MviReducer<GenerateGoalResult,
         return when (result) {
             is Loading -> {
                 previousState.copy(
-                    isWin = false,
                     isLoading = true,
                     error = null
                 )
@@ -21,14 +20,12 @@ class GenerateGoalReducer @Inject constructor() : MviReducer<GenerateGoalResult,
                 previousState.copy(
                     goal = result.goal,
                     count = result.startNumber,
-                    isWin = false,
                     isLoading = false,
                     error = null
                 )
             }
             is Failure -> {
                 previousState.copy(
-                    isWin = false,
                     isLoading = false,
                     error = result.throwable
                 )

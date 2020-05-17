@@ -16,6 +16,12 @@ fun DependencyHandler.dagger() {
     kapt(Dependency.daggerCompiler)
 }
 
+fun DependencyHandler.unitTest() {
+    testImplementation(Dependency.junit)
+    testImplementation(Dependency.mockito)
+    testImplementation(Dependency.mockitoKotlin)
+}
+
 fun DependencyHandler.implementation(depName: String) {
     add("implementation", depName)
 }
@@ -30,4 +36,8 @@ private fun DependencyHandler.compileOnly(depName: String) {
 
 private fun DependencyHandler.api(depName: String) {
     add("api", depName)
+}
+
+private fun DependencyHandler.testImplementation(depName: String) {
+    add("testImplementation", depName)
 }

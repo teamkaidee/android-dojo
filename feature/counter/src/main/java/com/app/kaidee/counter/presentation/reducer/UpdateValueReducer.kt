@@ -12,14 +12,12 @@ class UpdateValueReducer @Inject constructor() : MviReducer<UpdateValueResult, C
         return when (result) {
             is Win -> {
                 previousState.copy(
-                    isWin = true,
                     count = previousState.count + result.value,
                     error = null
                 )
             }
             is Success -> {
                 previousState.copy(
-                    isWin = false,
                     count = previousState.count + result.value,
                     error = null
                 )

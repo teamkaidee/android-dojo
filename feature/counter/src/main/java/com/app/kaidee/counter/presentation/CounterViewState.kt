@@ -5,7 +5,6 @@ import com.app.kaidee.arch.mvi.MviViewState
 data class CounterViewState(
     val goal: Int,
     val count: Int,
-    val isWin: Boolean,
     val isLoading: Boolean,
     val error: Throwable?
 ) : MviViewState {
@@ -20,7 +19,6 @@ data class CounterViewState(
             return CounterViewState(
                 goal = 0,
                 count = 0,
-                isWin = false,
                 isLoading = true,
                 error = null
             )

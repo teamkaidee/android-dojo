@@ -15,5 +15,7 @@ object Version {
     const val junit = "4.12"
     const val androidXJunit = "1.1.1"
     const val espresso = "3.2.0"
+    const val mockito = "3.3.3"
+    const val mockitoKotlin = "2.2.0"
 
 }

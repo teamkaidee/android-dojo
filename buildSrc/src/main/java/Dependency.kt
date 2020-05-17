@@ -17,6 +17,8 @@ object Dependency {
 
     // Unit Test
     const val junit = "junit:junit:${Version.junit}"
+    const val mockito = "org.mockito:mockito-core:${Version.mockito}"
+    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Version.mockitoKotlin}"
 
     // Android Test
     const val androidXJunit = "androidx.test.ext:junit:${Version.androidXJunit}"

@@ -38,6 +38,9 @@ class CounterFragment : Fragment(), MviView<CounterIntent, CounterViewState> {
             .appComponent(App.appComponent)
             .build()
             .inject(this)
+        disposable.add(presenter.states().subscribe(::render, ::handleError))
+        disposable.add(presenter.navigation().subscribe(::route, ::handleError))
+        presenter.dispatch(InitialIntent)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,8 +50,6 @@ class CounterFragment : Fragment(), MviView<CounterIntent, CounterViewState> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
-        disposable.add(presenter.states().subscribe(::render, ::handleError))
-        disposable.add(presenter.navigation().subscribe(::route, ::handleError))
     }
 
     private fun setupView() {

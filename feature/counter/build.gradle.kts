@@ -31,4 +31,6 @@ dependencies {
     appCompat()
     dagger()
     navigationComponent()
+
+    unitTest()
 }

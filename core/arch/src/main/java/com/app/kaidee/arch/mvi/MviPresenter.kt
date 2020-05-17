@@ -36,7 +36,7 @@ open class MviPresenter<I : MviIntent, S : MviViewState, A : MviAction, R : MviR
 
     private var currentState = initialState
 
-    fun dispatch(intent: I) {
+    open fun dispatch(intent: I) {
         intentSubject.onNext(intent)
     }
 
