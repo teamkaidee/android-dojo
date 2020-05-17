@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">android-dojo</string>
+    <string name="app_name">dojo</string>
+    <string name="title_counter">counter</string>
 </resources>

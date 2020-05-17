@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_counter"
+    app:startDestination="@id/fragment_counter">
+
+    <fragment
+        android:id="@+id/fragment_counter"
+        android:name="com.app.kaidee.counter.CounterFragment"
+        android:label="fragment_counter"
+        app:moduleName="counter">
+        <action
+            android:id="@+id/action_counter_to_result"
+            app:destination="@id/fragment_counter_result"
+            app:popUpTo="@id/nav_main"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_counter_result"
+        android:name="com.app.kaidee.counter.CounterResultFragment"
+        android:label="fragment_counter"
+        app:moduleName="counter">
+        <action
+            android:id="@+id/action_result_to_counter"
+            app:destination="@id/fragment_counter" />
+        <action
+            android:id="@+id/action_result_to_lesson"
+            app:destination="@id/nav_main"
+            app:popUpTo="@id/nav_main"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+</navigation>
