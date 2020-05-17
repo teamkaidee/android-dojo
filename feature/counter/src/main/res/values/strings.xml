@@ -3,5 +3,9 @@
     <string name="counter_button_increase">Increase</string>
     <string name="counter_button_decrease">Decrease</string>
     <string name="counter_goal">adjust number to %s</string>
+    <string name="counter_back_to_lesson">Back to Lesson</string>
+
+    <string name="counter_result_good_luck">You are ready for MVI journey, good luck</string>
+    <string name="counter_result_play_again">Play Again</string>
 
 </resources>

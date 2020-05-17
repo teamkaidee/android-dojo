@@ -6,16 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.app.kaidee.arch.mvi.MviView
 import com.app.kaidee.common.di.factory.ViewModelFactory
 import com.app.kaidee.counter.di.component.DaggerCounterComponent
 import com.app.kaidee.counter.presentation.CounterIntent
 import com.app.kaidee.counter.presentation.CounterIntent.*
 import com.app.kaidee.counter.presentation.CounterPresenter
+import com.app.kaidee.counter.presentation.CounterRouter
 import com.app.kaidee.counter.presentation.CounterViewState
 import com.app.kaidee.dojo.App
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_counter.*
+import com.app.kaidee.dojo.R as appRes
 import javax.inject.Inject
 
 class CounterFragment : Fragment(), MviView<CounterIntent, CounterViewState> {
@@ -45,6 +48,25 @@ class CounterFragment : Fragment(), MviView<CounterIntent, CounterViewState> {
         super.onViewCreated(view, savedInstanceState)
         setupView()
         disposable.add(presenter.states().subscribe(::render, ::handleError))
+        disposable.add(presenter.navigation().subscribe(::route, ::handleError))
+    }
+
+    private fun setupView() {
+        group_content?.referencedIds = intArrayOf(
+            R.id.textview_goal,
+            R.id.textview_count,
+            R.id.button_decrease,
+            R.id.button_increase
+        )
+        button_decrease?.setOnClickListener {
+            presenter.dispatch(DecreaseIntent)
+        }
+        button_increase?.setOnClickListener {
+            presenter.dispatch(IncreaseIntent)
+        }
+        button_lesson?.setOnClickListener {
+            route(CounterRouter.Lesson)
+        }
     }
 
     override fun render(state: CounterViewState) {
@@ -63,9 +85,6 @@ class CounterFragment : Fragment(), MviView<CounterIntent, CounterViewState> {
                 group_content?.visibility = View.VISIBLE
                 textview_goal?.text = String.format(getString(R.string.counter_goal), state.goal)
                 textview_count?.text = state.count.toString()
-                if (state.isWin) {
-                    textview_goal?.text = "WIN" //TODO: remove it after result page finish
-                }
             }
         }
     }
@@ -74,18 +93,14 @@ class CounterFragment : Fragment(), MviView<CounterIntent, CounterViewState> {
         throwable.printStackTrace()
     }
 
-    private fun setupView() {
-        group_content?.referencedIds = intArrayOf(
-            R.id.textview_goal,
-            R.id.textview_count,
-            R.id.button_decrease,
-            R.id.button_increase
-        )
-        button_decrease?.setOnClickListener {
-            presenter.dispatch(DecreaseIntent)
-        }
-        button_increase?.setOnClickListener {
-            presenter.dispatch(IncreaseIntent)
+    private fun route(router: CounterRouter) {
+        when (router) {
+            is CounterRouter.ResultPage -> {
+                findNavController().navigate(appRes.id.action_counter_to_result)
+            }
+            is CounterRouter.Lesson -> {
+                findNavController().popBackStack()
+            }
         }
     }
 

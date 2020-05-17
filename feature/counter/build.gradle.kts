@@ -30,4 +30,5 @@ dependencies {
     implementation(Dependency.constraintLayout)
     appCompat()
     dagger()
+    navigationComponent()
 }

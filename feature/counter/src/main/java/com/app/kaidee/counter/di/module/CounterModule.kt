@@ -58,14 +58,16 @@ abstract class CounterModule {
             schedulerProvider: SchedulerProvider,
             processorHolder: CounterProcessorHolder,
             reducerHolder: CounterReducerHolder,
-            actionMapper: CounterActionMapper
+            actionMapper: CounterActionMapper,
+            routerMapper: CounterRouterMapper
         ): ViewModel {
             return CounterPresenter(
                 initialState = CounterViewState.idle(),
                 schedulerProvider = schedulerProvider,
                 processorHolder = processorHolder,
                 reducerHolder = reducerHolder,
-                actionMapper = actionMapper
+                actionMapper = actionMapper,
+                routerMapper = routerMapper
             )
         }
 

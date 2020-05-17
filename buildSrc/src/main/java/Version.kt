@@ -1,6 +1,6 @@
 object Version {
 
-    const val kotlin = "1.3.71"
+    const val kotlin = "1.3.72"
     const val gradle = "3.6.3"
 
     const val appCompat = "1.1.0"
