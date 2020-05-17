@@ -1,6 +1,7 @@
 <resources>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="counter_button_increase">Increase</string>
+    <string name="counter_button_decrease">Decrease</string>
+    <string name="counter_goal">adjust number to %s</string>
 
 </resources>

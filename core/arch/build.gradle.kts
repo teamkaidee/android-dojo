@@ -20,6 +20,6 @@ android {
 dependencies {
     implementation(project(Module.Core.common))
     implementation(Dependency.kotlinJdk7)
-    implementation(Dependency.rxKotlin)
-    implementation(Dependency.viewModel)
+    api(Dependency.rxKotlin)
+    api(Dependency.viewModel)
 }
