@@ -25,9 +25,4 @@ class CounterRepositoryImpl @Inject constructor() : CounterRepository {
         return currentGoal == currentValue
     }
 
-    override fun reset() {
-        currentGoal = 0
-        currentValue = 0
-    }
-
 }
