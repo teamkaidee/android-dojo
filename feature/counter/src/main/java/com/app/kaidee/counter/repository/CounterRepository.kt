@@ -6,6 +6,4 @@ interface CounterRepository {
 
     fun isWin(value: Int): Boolean
 
-    fun reset()
-
 }
