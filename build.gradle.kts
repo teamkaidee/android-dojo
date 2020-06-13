@@ -1,14 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(Plugin.gradleBuildTool)
-        classpath(Plugin.kotlinGradlePlugin)
-    }
-}
-
 allprojects {
     repositories {
         google()

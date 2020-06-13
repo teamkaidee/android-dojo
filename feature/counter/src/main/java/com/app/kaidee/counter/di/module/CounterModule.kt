@@ -14,6 +14,8 @@ import com.app.kaidee.counter.presentation.reducer.GenerateGoalReducer
 import com.app.kaidee.counter.presentation.reducer.UpdateValueReducer
 import com.app.kaidee.counter.repository.CounterRepository
 import com.app.kaidee.counter.repository.CounterRepositoryImpl
+import com.app.kaidee.counter.usecase.CheckIsWin
+import com.app.kaidee.counter.usecase.GenerateGameSession
 import com.app.kaidee.dojo.di.scope.Presentation
 import dagger.Binds
 import dagger.Module
@@ -38,16 +40,16 @@ abstract class CounterModule {
 
         @Provides
         fun provideGenerateGoalProcessor(
-            repository: CounterRepository
+            generateGameSession: GenerateGameSession
         ): MviProcessor<GenerateGoalAction, GenerateGoalResult> {
-            return GenerateGoalProcessor(repository)
+            return GenerateGoalProcessor(generateGameSession)
         }
 
         @Provides
         fun provideUpdateValueProcessor(
-            repository: CounterRepository
+            checkIsWin: CheckIsWin
         ): MviProcessor<UpdateValueAction, UpdateValueResult> {
-            return UpdateValueProcessor(repository)
+            return UpdateValueProcessor(checkIsWin)
         }
 
         @Provides

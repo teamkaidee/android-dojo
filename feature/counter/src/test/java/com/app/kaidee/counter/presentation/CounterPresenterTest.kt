@@ -5,10 +5,10 @@ import com.app.kaidee.counter.presentation.processor.GenerateGoalProcessor
 import com.app.kaidee.counter.presentation.processor.UpdateValueProcessor
 import com.app.kaidee.counter.presentation.reducer.GenerateGoalReducer
 import com.app.kaidee.counter.presentation.reducer.UpdateValueReducer
-import com.app.kaidee.counter.repository.CounterRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +20,10 @@ import org.mockito.junit.MockitoJUnitRunner
 class CounterPresenterTest {
 
     @Mock
-    lateinit var counterRepository: CounterRepository
+    lateinit var generateGameSession: () -> Observable<Pair<Int, Int>>
+
+    @Mock
+    lateinit var checkIsWin: (Int) -> Observable<Boolean>
 
     private lateinit var presenter: CounterPresenter
 
@@ -30,8 +33,8 @@ class CounterPresenterTest {
 
     @Before
     fun setUp() {
-        val generateGoalProcessor = GenerateGoalProcessor(counterRepository)
-        val updateValueProcessor = UpdateValueProcessor(counterRepository)
+        val generateGoalProcessor = GenerateGoalProcessor(generateGameSession)
+        val updateValueProcessor = UpdateValueProcessor(checkIsWin)
         val processorHolder = CounterProcessorHolder(generateGoalProcessor, updateValueProcessor)
         val reducerHolder = CounterReducerHolder(GenerateGoalReducer(), UpdateValueReducer())
         presenter = CounterPresenter(
@@ -82,6 +85,7 @@ class CounterPresenterTest {
             count = startNumber + 1
         )
         stubGenerateGameSession(goal, startNumber)
+        stubCheckIsWin(false)
 
         // WHEN
         presenter.dispatch(CounterIntent.InitialIntent)
@@ -109,6 +113,7 @@ class CounterPresenterTest {
             count = startNumber - 1
         )
         stubGenerateGameSession(goal, startNumber)
+        stubCheckIsWin(false)
 
         // WHEN
         presenter.dispatch(CounterIntent.InitialIntent)
@@ -136,7 +141,7 @@ class CounterPresenterTest {
             count = startNumber + 1
         )
         stubGenerateGameSession(goal, startNumber)
-        whenever(counterRepository.isWin(any())).doReturn(true)
+        stubCheckIsWin(true)
 
         // WHEN
         presenter.dispatch(CounterIntent.InitialIntent)
@@ -150,7 +155,11 @@ class CounterPresenterTest {
     }
 
     private fun stubGenerateGameSession(goal: Int, startNumber: Int) {
-        whenever(counterRepository.generateGameSession()).doReturn(Pair(goal, startNumber))
+        whenever(generateGameSession.invoke()).doReturn(Observable.just(Pair(goal, startNumber)))
+    }
+
+    private fun stubCheckIsWin(isWin: Boolean) {
+        whenever(checkIsWin(any())).doReturn(Observable.just(isWin))
     }
 
 }

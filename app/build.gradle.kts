@@ -1,3 +1,8 @@
+import extension.appCompat
+import extension.dagger
+import extension.implementation
+import extension.navigationComponent
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -18,7 +23,7 @@ android {
     }
 
     buildTypes {
-        getByName(BuildType.release) {
+        getByName(ApplicationBuildVariant.release) {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
