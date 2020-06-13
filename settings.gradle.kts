@@ -1,4 +1,4 @@
-include(Module.app)
-include(Module.Core.arch)
-include(Module.Core.common)
-include(Module.Feature.counter)
+include(":app")
+include(":core:arch")
+include(":core:common")
+include(":feature:counter")

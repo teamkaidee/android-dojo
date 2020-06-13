@@ -1,4 +1,4 @@
-object BuildType {
+object ApplicationBuildVariant {
 
     const val release = "release"
 
