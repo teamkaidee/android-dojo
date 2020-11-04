@@ -19,147 +19,147 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CounterPresenterTest {
 
-    @Mock
-    lateinit var generateGameSession: () -> Observable<Pair<Int, Int>>
+	@Mock
+	lateinit var generateGameSession: () -> Observable<Pair<Int, Int>>
 
-    @Mock
-    lateinit var checkIsWin: (Int) -> Observable<Boolean>
+	@Mock
+	lateinit var checkIsWin: (Int) -> Observable<Boolean>
 
-    private lateinit var presenter: CounterPresenter
+	private lateinit var presenter: CounterPresenter
 
-    private lateinit var stateObserver: TestObserver<CounterViewState>
+	private lateinit var stateObserver: TestObserver<CounterViewState>
 
-    private lateinit var navigationObserver: TestObserver<CounterRouter>
+	private lateinit var navigationObserver: TestObserver<CounterRouter>
 
-    @Before
-    fun setUp() {
-        val generateGoalProcessor = GenerateGoalProcessor(generateGameSession)
-        val updateValueProcessor = UpdateValueProcessor(checkIsWin)
-        val processorHolder = CounterProcessorHolder(generateGoalProcessor, updateValueProcessor)
-        val reducerHolder = CounterReducerHolder(GenerateGoalReducer(), UpdateValueReducer())
-        presenter = CounterPresenter(
-            initialState = CounterViewState.idle(),
-            schedulerProvider = TestSchedulerProvider(),
-            processorHolder = processorHolder,
-            reducerHolder = reducerHolder,
-            actionMapper = CounterActionMapper(),
-            routerMapper = CounterRouterMapper()
-        )
-        stateObserver = presenter.states().test()
-        navigationObserver = presenter.navigation().test()
-    }
+	@Before
+	fun setUp() {
+		val generateGoalProcessor = GenerateGoalProcessor(generateGameSession)
+		val updateValueProcessor = UpdateValueProcessor(checkIsWin)
+		val processorHolder = CounterProcessorHolder(generateGoalProcessor, updateValueProcessor)
+		val reducerHolder = CounterReducerHolder(GenerateGoalReducer(), UpdateValueReducer())
+		presenter = CounterPresenter(
+			initialState = CounterViewState.idle(),
+			schedulerProvider = TestSchedulerProvider(),
+			processorHolder = processorHolder,
+			reducerHolder = reducerHolder,
+			actionMapper = CounterActionMapper(),
+			routerMapper = CounterRouterMapper()
+		)
+		stateObserver = presenter.states().test()
+		navigationObserver = presenter.navigation().test()
+	}
 
-    @Test
-    fun `When initial view should generate goal and start number`() {
-        // GIVEN
-        val goal = 1
-        val startNumber = 2
-        val expectedViewState = CounterViewState.idle().copy(
-            isLoading = false,
-            goal = goal,
-            count = startNumber
-        )
-        stubGenerateGameSession(goal, startNumber)
+	@Test
+	fun `When initial view should generate goal and start number`() {
+		// GIVEN
+		val goal = 1
+		val startNumber = 2
+		val expectedViewState = CounterViewState.idle().copy(
+			isLoading = false,
+			goal = goal,
+			count = startNumber
+		)
+		stubGenerateGameSession(goal, startNumber)
 
-        // WHEN
-        presenter.dispatch(CounterIntent.InitialIntent)
+		// WHEN
+		presenter.dispatch(CounterIntent.InitialIntent)
 
-        // THEN
-        stateObserver.assertValueAt(0, CounterViewState.idle())
-        stateObserver.assertValueAt(1, expectedViewState)
-        navigationObserver.assertValue(CounterRouter.Stay)
-    }
+		// THEN
+		stateObserver.assertValueAt(0, CounterViewState.idle())
+		stateObserver.assertValueAt(1, expectedViewState)
+		navigationObserver.assertValue(CounterRouter.Stay)
+	}
 
-    @Test
-    fun `When press increase button count should increase by 1`() {
-        // GIVEN
-        val goal = 1
-        val startNumber = 2
-        val initViewState = CounterViewState.idle().copy(
-            isLoading = false,
-            goal = goal,
-            count = startNumber,
-            error = null
-        )
-        val expectedViewState = initViewState.copy(
-            count = startNumber + 1
-        )
-        stubGenerateGameSession(goal, startNumber)
-        stubCheckIsWin(false)
+	@Test
+	fun `When press increase button count should increase by 1`() {
+		// GIVEN
+		val goal = 1
+		val startNumber = 2
+		val initViewState = CounterViewState.idle().copy(
+			isLoading = false,
+			goal = goal,
+			count = startNumber,
+			error = null
+		)
+		val expectedViewState = initViewState.copy(
+			count = startNumber + 1
+		)
+		stubGenerateGameSession(goal, startNumber)
+		stubCheckIsWin(false)
 
-        // WHEN
-        presenter.dispatch(CounterIntent.InitialIntent)
-        presenter.dispatch(CounterIntent.IncreaseIntent)
+		// WHEN
+		presenter.dispatch(CounterIntent.InitialIntent)
+		presenter.dispatch(CounterIntent.IncreaseIntent)
 
-        // THEN
-        stateObserver.assertValueAt(0, CounterViewState.idle())
-        stateObserver.assertValueAt(1, initViewState)
-        stateObserver.assertValueAt(2, expectedViewState)
-        navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
-    }
+		// THEN
+		stateObserver.assertValueAt(0, CounterViewState.idle())
+		stateObserver.assertValueAt(1, initViewState)
+		stateObserver.assertValueAt(2, expectedViewState)
+		navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
+	}
 
-    @Test
-    fun `When press decrease button count should decrease by 1`() {
-        // GIVEN
-        val goal = 2
-        val startNumber = 1
-        val initViewState = CounterViewState.idle().copy(
-            isLoading = false,
-            goal = goal,
-            count = startNumber,
-            error = null
-        )
-        val expectedViewState = initViewState.copy(
-            count = startNumber - 1
-        )
-        stubGenerateGameSession(goal, startNumber)
-        stubCheckIsWin(false)
+	@Test
+	fun `When press decrease button count should decrease by 1`() {
+		// GIVEN
+		val goal = 2
+		val startNumber = 1
+		val initViewState = CounterViewState.idle().copy(
+			isLoading = false,
+			goal = goal,
+			count = startNumber,
+			error = null
+		)
+		val expectedViewState = initViewState.copy(
+			count = startNumber - 1
+		)
+		stubGenerateGameSession(goal, startNumber)
+		stubCheckIsWin(false)
 
-        // WHEN
-        presenter.dispatch(CounterIntent.InitialIntent)
-        presenter.dispatch(CounterIntent.DecreaseIntent)
+		// WHEN
+		presenter.dispatch(CounterIntent.InitialIntent)
+		presenter.dispatch(CounterIntent.DecreaseIntent)
 
-        // THEN
-        stateObserver.assertValueAt(0, CounterViewState.idle())
-        stateObserver.assertValueAt(1, initViewState)
-        stateObserver.assertValueAt(2, expectedViewState)
-        navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
-    }
+		// THEN
+		stateObserver.assertValueAt(0, CounterViewState.idle())
+		stateObserver.assertValueAt(1, initViewState)
+		stateObserver.assertValueAt(2, expectedViewState)
+		navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
+	}
 
-    @Test
-    fun `When win should navigate to Result Page`() {
-        // GIVEN
-        val goal = 2
-        val startNumber = 1
-        val initViewState = CounterViewState.idle().copy(
-            isLoading = false,
-            goal = goal,
-            count = startNumber,
-            error = null
-        )
-        val expectedViewState = initViewState.copy(
-            count = startNumber + 1
-        )
-        stubGenerateGameSession(goal, startNumber)
-        stubCheckIsWin(true)
+	@Test
+	fun `When win should navigate to Result Page`() {
+		// GIVEN
+		val goal = 2
+		val startNumber = 1
+		val initViewState = CounterViewState.idle().copy(
+			isLoading = false,
+			goal = goal,
+			count = startNumber,
+			error = null
+		)
+		val expectedViewState = initViewState.copy(
+			count = startNumber + 1
+		)
+		stubGenerateGameSession(goal, startNumber)
+		stubCheckIsWin(true)
 
-        // WHEN
-        presenter.dispatch(CounterIntent.InitialIntent)
-        presenter.dispatch(CounterIntent.IncreaseIntent)
+		// WHEN
+		presenter.dispatch(CounterIntent.InitialIntent)
+		presenter.dispatch(CounterIntent.IncreaseIntent)
 
-        // THEN
-        stateObserver.assertValueAt(0, CounterViewState.idle())
-        stateObserver.assertValueAt(1, initViewState)
-        stateObserver.assertValueAt(2, expectedViewState)
-        navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.ResultPage)
-    }
+		// THEN
+		stateObserver.assertValueAt(0, CounterViewState.idle())
+		stateObserver.assertValueAt(1, initViewState)
+		stateObserver.assertValueAt(2, expectedViewState)
+		navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.ResultPage)
+	}
 
-    private fun stubGenerateGameSession(goal: Int, startNumber: Int) {
-        whenever(generateGameSession.invoke()).doReturn(Observable.just(Pair(goal, startNumber)))
-    }
+	private fun stubGenerateGameSession(goal: Int, startNumber: Int) {
+		whenever(generateGameSession.invoke()).doReturn(Observable.just(Pair(goal, startNumber)))
+	}
 
-    private fun stubCheckIsWin(isWin: Boolean) {
-        whenever(checkIsWin(any())).doReturn(Observable.just(isWin))
-    }
+	private fun stubCheckIsWin(isWin: Boolean) {
+		whenever(checkIsWin(any())).doReturn(Observable.just(isWin))
+	}
 
 }

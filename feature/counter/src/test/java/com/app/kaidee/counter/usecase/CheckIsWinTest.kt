@@ -13,23 +13,23 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CheckIsWinTest {
 
-    @Mock
-    lateinit var counterRepository: CounterRepository
+	@Mock
+	lateinit var counterRepository: CounterRepository
 
-    @InjectMocks
-    lateinit var useCase: CheckIsWin
+	@InjectMocks
+	lateinit var useCase: CheckIsWin
 
-    @Test
-    fun `When check is win success`() {
-        // GIVEN
-        val result = true
-        whenever(counterRepository.isWin(any())).doReturn(result)
+	@Test
+	fun `When check is win success`() {
+		// GIVEN
+		val result = true
+		whenever(counterRepository.isWin(any())).doReturn(result)
 
-        // WHEN
-        val testObserver = useCase(0).test()
+		// WHEN
+		val testObserver = useCase(0).test()
 
-        // THEN
-        testObserver.assertValue(result)
-    }
+		// THEN
+		testObserver.assertValue(result)
+	}
 
 }

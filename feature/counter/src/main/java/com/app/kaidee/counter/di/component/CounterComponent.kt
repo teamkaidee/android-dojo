@@ -8,11 +8,11 @@ import dagger.Component
 
 @Presentation
 @Component(
-    modules = [CounterModule::class],
-    dependencies = [AppComponent::class]
+	modules = [CounterModule::class],
+	dependencies = [AppComponent::class]
 )
 interface CounterComponent {
 
-    fun inject(fragment: CounterFragment)
+	fun inject(fragment: CounterFragment)
 
 }

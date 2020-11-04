@@ -6,8 +6,10 @@ import com.app.kaidee.arch.mvi.MviReducer
 import com.app.kaidee.common.di.scope.ViewModelKey
 import com.app.kaidee.common.rxscheduler.SchedulerProvider
 import com.app.kaidee.counter.presentation.*
-import com.app.kaidee.counter.presentation.CounterAction.*
-import com.app.kaidee.counter.presentation.CounterResult.*
+import com.app.kaidee.counter.presentation.CounterAction.GenerateGoalAction
+import com.app.kaidee.counter.presentation.CounterAction.UpdateValueAction
+import com.app.kaidee.counter.presentation.CounterResult.GenerateGoalResult
+import com.app.kaidee.counter.presentation.CounterResult.UpdateValueResult
 import com.app.kaidee.counter.presentation.processor.GenerateGoalProcessor
 import com.app.kaidee.counter.presentation.processor.UpdateValueProcessor
 import com.app.kaidee.counter.presentation.reducer.GenerateGoalReducer
@@ -25,54 +27,54 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class CounterModule {
 
-    @Binds
-    @Presentation
-    abstract fun bindCounterRepository(impl: CounterRepositoryImpl): CounterRepository
+	@Binds
+	@Presentation
+	abstract fun bindCounterRepository(impl: CounterRepositoryImpl): CounterRepository
 
-    @Binds
-    abstract fun bindGenerateGoalReducer(impl: GenerateGoalReducer): MviReducer<GenerateGoalResult, CounterViewState>
+	@Binds
+	abstract fun bindGenerateGoalReducer(impl: GenerateGoalReducer): MviReducer<GenerateGoalResult, CounterViewState>
 
-    @Binds
-    abstract fun bindUpdateValueReducer(impl: UpdateValueReducer): MviReducer<UpdateValueResult, CounterViewState>
+	@Binds
+	abstract fun bindUpdateValueReducer(impl: UpdateValueReducer): MviReducer<UpdateValueResult, CounterViewState>
 
-    @Module
-    companion object {
+	@Module
+	companion object {
 
-        @Provides
-        fun provideGenerateGoalProcessor(
-            generateGameSession: GenerateGameSession
-        ): MviProcessor<GenerateGoalAction, GenerateGoalResult> {
-            return GenerateGoalProcessor(generateGameSession)
-        }
+		@Provides
+		fun provideGenerateGoalProcessor(
+        generateGameSession: GenerateGameSession
+    ): MviProcessor<GenerateGoalAction, GenerateGoalResult> {
+			return GenerateGoalProcessor(generateGameSession)
+		}
 
-        @Provides
-        fun provideUpdateValueProcessor(
-            checkIsWin: CheckIsWin
-        ): MviProcessor<UpdateValueAction, UpdateValueResult> {
-            return UpdateValueProcessor(checkIsWin)
-        }
+		@Provides
+		fun provideUpdateValueProcessor(
+        checkIsWin: CheckIsWin
+    ): MviProcessor<UpdateValueAction, UpdateValueResult> {
+			return UpdateValueProcessor(checkIsWin)
+		}
 
-        @Provides
-        @Presentation
-        @IntoMap
-        @ViewModelKey(CounterPresenter::class)
-        fun provideCounterPresenter(
-            schedulerProvider: SchedulerProvider,
-            processorHolder: CounterProcessorHolder,
-            reducerHolder: CounterReducerHolder,
-            actionMapper: CounterActionMapper,
-            routerMapper: CounterRouterMapper
-        ): ViewModel {
-            return CounterPresenter(
-                initialState = CounterViewState.idle(),
-                schedulerProvider = schedulerProvider,
-                processorHolder = processorHolder,
-                reducerHolder = reducerHolder,
-                actionMapper = actionMapper,
-                routerMapper = routerMapper
-            )
-        }
+		@Provides
+		@Presentation
+		@IntoMap
+		@ViewModelKey(CounterPresenter::class)
+		fun provideCounterPresenter(
+        schedulerProvider: SchedulerProvider,
+        processorHolder: CounterProcessorHolder,
+        reducerHolder: CounterReducerHolder,
+        actionMapper: CounterActionMapper,
+        routerMapper: CounterRouterMapper
+    ): ViewModel {
+			return CounterPresenter(
+          initialState = CounterViewState.idle(),
+          schedulerProvider = schedulerProvider,
+          processorHolder = processorHolder,
+          reducerHolder = reducerHolder,
+          actionMapper = actionMapper,
+          routerMapper = routerMapper
+      )
+		}
 
-    }
+	}
 
 }

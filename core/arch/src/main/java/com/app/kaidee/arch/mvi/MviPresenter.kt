@@ -16,73 +16,74 @@ import io.reactivex.subjects.PublishSubject
  * @param S Top class of the [MviViewState] the [MviPresenter] will be emitting.
  */
 open class MviPresenter<I : MviIntent, S : MviViewState, A : MviAction, R : MviResult>(
-    private val initialState: S,
-    private val schedulerProvider: SchedulerProvider,
-    private val processorHolder: MviProcessorHolder<A, R>,
-    private val reducerHolder: MviReducerHolder<R, S>,
-    private val actionMapper: MviActionMapper<I, A>
+	private val initialState: S,
+	private val schedulerProvider: SchedulerProvider,
+	private val processorHolder: MviProcessorHolder<A, R>,
+	private val reducerHolder: MviReducerHolder<R, S>,
+	private val actionMapper: MviActionMapper<I, S, A>
 ) : ViewModel() {
 
-    private val disposable by lazy {
-        CompositeDisposable()
-    }
+	private val disposable by lazy {
+		CompositeDisposable()
+	}
 
+	private val intentSubject = PublishSubject.create<I>()
 
-    private val intentSubject = PublishSubject.create<I>()
+	protected val resultObservable = shared()
 
-    protected val resultObservable = shared()
+	private val stateObservable = compose()
 
-    private val stateObservable = compose()
+	private var currentState = initialState
 
-    private var currentState = initialState
+	open fun dispatch(intent: I) {
+		intentSubject.onNext(intent)
+	}
 
-    open fun dispatch(intent: I) {
-        intentSubject.onNext(intent)
-    }
+	fun states(): Observable<S> {
+		return stateObservable
+	}
 
-    fun states(): Observable<S> {
-        return stateObservable
-    }
+	fun currentState(): S {
+		return currentState
+	}
 
-    fun currentState(): S {
-        return currentState
-    }
+	protected fun addDisposable(d: Disposable) {
+		disposable.add(d)
+	}
 
-    protected fun addDisposable(d: Disposable) {
-        disposable.add(d)
-    }
+	private fun shared(): Observable<R> {
+		return intentSubject
+			.observeOn(schedulerProvider.io())
+			.map { intent ->
+				actionMapper.mapToAction(intent, currentState)
+			}
+			.doOnNext { action ->
+				log(action::class.java.simpleName)
+			}
+			.compose(processorHolder)
+			.doOnNext { result ->
+				log(result::class.java.simpleName)
+			}
+			.share()
+	}
 
-    private fun shared(): Observable<R> {
-        return intentSubject
-            .observeOn(schedulerProvider.io())
-            .map(actionMapper::mapToAction)
-            .doOnNext { action ->
-                log(action::class.java.simpleName)
-            }
-            .compose(processorHolder)
-            .doOnNext { result ->
-                log(result::class.java.simpleName)
-            }
-            .share()
-    }
+	private fun compose(): Observable<S> {
+		return resultObservable.scan(initialState, reducerHolder)
+			.distinctUntilChanged()
+			.doOnNext { state ->
+				currentState = state
+				log(state.toLogString())
+			}
+			.replay(1)
+			.autoConnect(0)
+			.observeOn(schedulerProvider.ui())
+	}
 
-    private fun compose(): Observable<S> {
-        return resultObservable.scan(initialState, reducerHolder)
-            .distinctUntilChanged()
-            .doOnNext { state ->
-                currentState = state
-                log(state.toLogString())
-            }
-            .replay(1)
-            .autoConnect(0)
-            .observeOn(schedulerProvider.ui())
-    }
+	protected open fun log(message: String) {
+		println(message)
+	}
 
-    protected open fun log(message: String) {
-        println(message)
-    }
-
-    override fun onCleared() {
-        disposable.clear()
-    }
+	override fun onCleared() {
+		disposable.clear()
+	}
 }

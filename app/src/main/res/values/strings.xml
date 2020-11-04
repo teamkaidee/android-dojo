@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">dojo</string>
     <string name="title_counter">counter</string>
+    <string name="title_endless_scroll">Endless Scroll</string>
 </resources>

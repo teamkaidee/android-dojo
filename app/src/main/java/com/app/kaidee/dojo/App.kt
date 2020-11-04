@@ -6,15 +6,15 @@ import com.app.kaidee.dojo.di.component.DaggerAppComponent
 
 class App : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        appComponent = DaggerAppComponent.builder().build()
-    }
+	override fun onCreate() {
+		super.onCreate()
+		appComponent = DaggerAppComponent.builder().build()
+	}
 
-    companion object {
+	companion object {
 
-        lateinit var appComponent: AppComponent
+		lateinit var appComponent: AppComponent
 
-    }
+	}
 
 }

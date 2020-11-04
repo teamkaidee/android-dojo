@@ -1,5 +1,5 @@
 object ApplicationBuildVariant {
 
-    const val release = "release"
+	const val release = "release"
 
 }

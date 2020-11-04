@@ -1,9 +1,9 @@
 plugins {
-    id("common.android-library")
+	id("common.android-library")
 }
 
 dependencies {
-    implementation(project(Module.Core.common))
-    api(Dependency.rxKotlin)
-    api(Dependency.viewModel)
+	implementation(project(Module.Core.common))
+	api(Dependency.rxKotlin)
+	api(Dependency.viewModel)
 }

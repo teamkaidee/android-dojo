@@ -8,6 +8,6 @@ import io.reactivex.ObservableTransformer
  * */
 interface MviProcessor<A : MviAction, R : MviResult> {
 
-    fun execute(): ObservableTransformer<A, R>
+	fun execute(): ObservableTransformer<A, R>
 
 }

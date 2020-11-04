@@ -1,12 +1,12 @@
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+	repositories {
+		google()
+		jcenter()
+	}
 }
 
 tasks {
-    val clean by registering(Delete::class) {
-        delete(buildDir)
-    }
+	val clean by registering(Delete::class) {
+		delete(buildDir)
+	}
 }

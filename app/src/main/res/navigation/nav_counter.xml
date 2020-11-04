@@ -29,7 +29,7 @@
             android:id="@+id/action_result_to_lesson"
             app:destination="@id/nav_main"
             app:popUpTo="@id/nav_main"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>
