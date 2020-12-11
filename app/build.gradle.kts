@@ -1,13 +1,19 @@
-import extension.appCompat
-import extension.dagger
-import extension.implementation
-import extension.navigationComponent
+import com.app.kaidee.configuration.ApplicationConfig
+import com.app.kaidee.configuration.ApplicationBuildVariant
+import com.app.kaidee.extension.appCompat
+import com.app.kaidee.extension.navigationComponent
+import com.app.kaidee.extension.dagger
+import com.app.kaidee.dependencies.Dependencies
+import com.app.kaidee.dependencies.Dependencies.Module.Core as Core
+import com.app.kaidee.dependencies.Dependencies.Module.Feature as Feature
 
 plugins {
 	id("com.android.application")
 	kotlin("android")
 	kotlin("android.extensions")
 	kotlin("kapt")
+	id("kaidee-application-config")
+	id("kaidee-dependencies")
 }
 
 android {
@@ -38,23 +44,23 @@ android {
 		jvmTarget = JavaVersion.VERSION_1_8.toString()
 	}
 
-	dynamicFeatures = mutableSetOf(Module.Feature.counter, Module.Feature.endlessScroll)
+	dynamicFeatures = mutableSetOf(Feature.counter, Feature.endlessScroll)
 }
 
 dependencies {
 	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-	api(project(Module.Core.common))
-	api(project(Module.Core.arch))
-	implementation(Dependency.kotlinJdk7)
-	implementation(Dependency.constraintLayout)
-	implementation(Dependency.viewModel)
-	implementation(Dependency.liveData)
+	api(project(Core.common))
+	api(project(Core.arch))
+	implementation(Dependencies.App.kotlinJdk7)
+	implementation(Dependencies.App.constraintLayout)
+	implementation(Dependencies.App.viewModel)
+	implementation(Dependencies.App.liveData)
 	appCompat()
 	navigationComponent()
 	dagger()
 
-	testImplementation(Dependency.junit)
+	testImplementation(Dependencies.Test.junit)
 
-	androidTestImplementation(Dependency.androidXJunit)
-	androidTestImplementation(Dependency.espresso)
+	androidTestImplementation(Dependencies.AndroidTest.androidXJunit)
+	androidTestImplementation(Dependencies.AndroidTest.espresso)
 }

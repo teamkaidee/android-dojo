@@ -1,14 +1,13 @@
-import extension.dagger
-import extension.implementation
+import com.app.kaidee.dependencies.Dependencies
+import com.app.kaidee.extension.dagger
 
 plugins {
-	id("common.android-library")
-	kotlin("kapt")
+	id("kaidee-android-library")
 }
 
 dependencies {
-	implementation(Dependency.rxKotlin)
-	implementation(Dependency.rxAndroid)
-	implementation(Dependency.viewModel)
+	implementation(Dependencies.App.rxKotlin)
+	implementation(Dependencies.App.rxAndroid)
+	implementation(Dependencies.App.viewModel)
 	dagger()
 }

@@ -1,3 +1,5 @@
+package com.app.kaidee.configuration
+
 object ApplicationConfig {
 
 	const val minSdkVersion = 21

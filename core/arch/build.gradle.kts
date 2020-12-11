@@ -1,9 +1,12 @@
+import com.app.kaidee.dependencies.Dependencies
+import com.app.kaidee.dependencies.Dependencies.Module.Core as Core
+
 plugins {
-	id("common.android-library")
+	id("kaidee-android-library")
 }
 
 dependencies {
-	implementation(project(Module.Core.common))
-	api(Dependency.rxKotlin)
-	api(Dependency.viewModel)
+	implementation(project(Core.common))
+	api(Dependencies.App.rxKotlin)
+	api(Dependencies.App.viewModel)
 }
