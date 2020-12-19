@@ -46,6 +46,10 @@ abstract class MviLitePresenter<I : MviIntent, S : MviViewState, R : MviResult>(
 		}
 	}
 
+	fun currentState(): S {
+		return currentState
+	}
+
 	protected fun setState(reducer: S.() -> S): S {
 		currentState = reducer(currentState)
 		return currentState

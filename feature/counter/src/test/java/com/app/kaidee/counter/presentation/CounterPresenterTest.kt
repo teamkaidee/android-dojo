@@ -1,10 +1,5 @@
 package com.app.kaidee.counter.presentation
 
-import com.app.kaidee.common.rxscheduler.TestSchedulerProvider
-import com.app.kaidee.counter.presentation.processor.GenerateGoalProcessor
-import com.app.kaidee.counter.presentation.processor.UpdateValueProcessor
-import com.app.kaidee.counter.presentation.reducer.GenerateGoalReducer
-import com.app.kaidee.counter.presentation.reducer.UpdateValueReducer
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
@@ -29,24 +24,11 @@ class CounterPresenterTest {
 
 	private lateinit var stateObserver: TestObserver<CounterViewState>
 
-	private lateinit var navigationObserver: TestObserver<CounterRouter>
+	//private lateinit var navigationObserver: TestObserver<CounterRouter>
 
 	@Before
 	fun setUp() {
-		val generateGoalProcessor = GenerateGoalProcessor(generateGameSession)
-		val updateValueProcessor = UpdateValueProcessor(checkIsWin)
-		val processorHolder = CounterProcessorHolder(generateGoalProcessor, updateValueProcessor)
-		val reducerHolder = CounterReducerHolder(GenerateGoalReducer(), UpdateValueReducer())
-		presenter = CounterPresenter(
-			initialState = CounterViewState.idle(),
-			schedulerProvider = TestSchedulerProvider(),
-			processorHolder = processorHolder,
-			reducerHolder = reducerHolder,
-			actionMapper = CounterActionMapper(),
-			routerMapper = CounterRouterMapper()
-		)
 		stateObserver = presenter.states().test()
-		navigationObserver = presenter.navigation().test()
 	}
 
 	@Test
@@ -67,7 +49,7 @@ class CounterPresenterTest {
 		// THEN
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, expectedViewState)
-		navigationObserver.assertValue(CounterRouter.Stay)
+		//navigationObserver.assertValue(CounterRouter.Stay)
 	}
 
 	@Test
@@ -95,7 +77,7 @@ class CounterPresenterTest {
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, initViewState)
 		stateObserver.assertValueAt(2, expectedViewState)
-		navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
+		//navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
 	}
 
 	@Test
@@ -123,7 +105,7 @@ class CounterPresenterTest {
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, initViewState)
 		stateObserver.assertValueAt(2, expectedViewState)
-		navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
+		//navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
 	}
 
 	@Test
@@ -151,7 +133,7 @@ class CounterPresenterTest {
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, initViewState)
 		stateObserver.assertValueAt(2, expectedViewState)
-		navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.ResultPage)
+		//navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.ResultPage)
 	}
 
 	private fun stubGenerateGameSession(goal: Int, startNumber: Int) {

@@ -1,9 +1,28 @@
 package com.app.kaidee.counter.repository
 
-interface CounterRepository {
+import javax.inject.Inject
+import kotlin.random.Random
 
-	fun generateGameSession(): Pair<Int, Int>
+class CounterRepository @Inject constructor() {
 
-	fun isWin(value: Int): Boolean
+	private var currentGoal = 0
+
+	private var currentValue = 0
+
+	fun generateGameSession(): Pair<Int, Int> {
+		currentValue = 0
+		currentGoal = Random.nextInt(1, 5)
+
+		do {
+			currentValue = Random.nextInt(1, 5)
+		} while (currentValue == currentGoal)
+
+		return Pair(currentGoal, currentValue)
+	}
+
+	fun isWin(value: Int): Boolean {
+		currentValue += value
+		return currentGoal == currentValue
+	}
 
 }

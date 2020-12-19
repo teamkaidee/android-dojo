@@ -8,13 +8,13 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class CounterRepositoryImplTest {
+class CounterRepositoryTest {
 
 	private lateinit var repository: CounterRepository
 
 	@Before
 	fun setUp() {
-		repository = CounterRepositoryImpl()
+		repository = CounterRepository()
 	}
 
 	@Test
