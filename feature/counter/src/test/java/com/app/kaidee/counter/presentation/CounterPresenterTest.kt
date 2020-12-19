@@ -1,7 +1,12 @@
 package com.app.kaidee.counter.presentation
 
+import com.app.kaidee.common.rxscheduler.TestSchedulerProvider
+import com.app.kaidee.counter.navigation.CounterNavigator
+import com.app.kaidee.counter.usecase.CheckIsWin
+import com.app.kaidee.counter.usecase.GenerateGameSession
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
@@ -15,19 +20,27 @@ import org.mockito.junit.MockitoJUnitRunner
 class CounterPresenterTest {
 
 	@Mock
-	lateinit var generateGameSession: () -> Observable<Pair<Int, Int>>
+	lateinit var generateGameSession: GenerateGameSession
 
 	@Mock
-	lateinit var checkIsWin: (Int) -> Observable<Boolean>
+	lateinit var checkIsWin: CheckIsWin
+
+	@Mock
+	lateinit var navigator: CounterNavigator
 
 	private lateinit var presenter: CounterPresenter
 
 	private lateinit var stateObserver: TestObserver<CounterViewState>
 
-	//private lateinit var navigationObserver: TestObserver<CounterRouter>
-
 	@Before
 	fun setUp() {
+		presenter = CounterPresenter(
+			initialState = CounterViewState.idle(),
+			schedulerProvider = TestSchedulerProvider(),
+			generateGameSession = generateGameSession,
+			checkIsWin = checkIsWin,
+			navigator = navigator
+		)
 		stateObserver = presenter.states().test()
 	}
 
@@ -49,7 +62,6 @@ class CounterPresenterTest {
 		// THEN
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, expectedViewState)
-		//navigationObserver.assertValue(CounterRouter.Stay)
 	}
 
 	@Test
@@ -77,7 +89,6 @@ class CounterPresenterTest {
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, initViewState)
 		stateObserver.assertValueAt(2, expectedViewState)
-		//navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
 	}
 
 	@Test
@@ -105,7 +116,6 @@ class CounterPresenterTest {
 		stateObserver.assertValueAt(0, CounterViewState.idle())
 		stateObserver.assertValueAt(1, initViewState)
 		stateObserver.assertValueAt(2, expectedViewState)
-		//navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.Stay)
 	}
 
 	@Test
@@ -113,14 +123,11 @@ class CounterPresenterTest {
 		// GIVEN
 		val goal = 2
 		val startNumber = 1
-		val initViewState = CounterViewState.idle().copy(
+		val expectedViewState = CounterViewState.idle().copy(
 			isLoading = false,
 			goal = goal,
 			count = startNumber,
 			error = null
-		)
-		val expectedViewState = initViewState.copy(
-			count = startNumber + 1
 		)
 		stubGenerateGameSession(goal, startNumber)
 		stubCheckIsWin(true)
@@ -131,9 +138,8 @@ class CounterPresenterTest {
 
 		// THEN
 		stateObserver.assertValueAt(0, CounterViewState.idle())
-		stateObserver.assertValueAt(1, initViewState)
-		stateObserver.assertValueAt(2, expectedViewState)
-		//navigationObserver.assertValues(CounterRouter.Stay, CounterRouter.ResultPage)
+		stateObserver.assertValueAt(1, expectedViewState)
+		verify(navigator).navigateToResultPage()
 	}
 
 	private fun stubGenerateGameSession(goal: Int, startNumber: Int) {
