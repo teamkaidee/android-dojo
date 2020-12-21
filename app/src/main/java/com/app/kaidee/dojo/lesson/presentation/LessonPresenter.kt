@@ -9,7 +9,7 @@ import javax.inject.Inject
 class LessonPresenter @Inject constructor(
 	val schedulerProvider: SchedulerProvider,
 	private val lessonRepository: LessonRepository
-) : MviLitePresenter<LessonIntent, LessonViewState, LessonResult>(LessonViewState.idle(), schedulerProvider) {
+) : MviLitePresenter<LessonIntent, LessonViewState>(LessonViewState.idle(), schedulerProvider) {
 
 	override fun processorHolder(intents: Observable<LessonIntent>): List<Observable<LessonViewState>> {
 		return with(intents) {

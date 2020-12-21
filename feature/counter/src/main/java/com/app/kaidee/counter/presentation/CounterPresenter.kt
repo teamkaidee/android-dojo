@@ -15,7 +15,7 @@ class CounterPresenter @Inject constructor(
 	private val generateGameSession: GenerateGameSession,
 	private val checkIsWin: CheckIsWin,
 	private val navigator: CounterNavigator
-) : MviLitePresenter<CounterIntent, CounterViewState, CounterResult>(initialState, schedulerProvider) {
+) : MviLitePresenter<CounterIntent, CounterViewState>(initialState, schedulerProvider) {
 
 	override fun processorHolder(intents: Observable<CounterIntent>): List<Observable<CounterViewState>> {
 		return with(intents) {

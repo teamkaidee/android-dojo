@@ -3,7 +3,6 @@ package com.app.kaidee.arch.mvi.lite
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import com.app.kaidee.arch.mvi.MviIntent
-import com.app.kaidee.arch.mvi.MviResult
 import com.app.kaidee.arch.mvi.MviViewState
 import com.app.kaidee.common.rxscheduler.SchedulerProvider
 import io.reactivex.Observable
@@ -12,7 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 @SuppressLint("CheckResult")
-abstract class MviLitePresenter<I : MviIntent, S : MviViewState, R : MviResult>(
+abstract class MviLitePresenter<I : MviIntent, S : MviViewState>(
 	initialState: S,
 	schedulerProvider: SchedulerProvider
 ) : ViewModel() {
@@ -29,6 +28,7 @@ abstract class MviLitePresenter<I : MviIntent, S : MviViewState, R : MviResult>(
 		disposable.add(
 			intentSubject.observeOn(schedulerProvider.io())
 				.publish(::process)
+				.distinctUntilChanged()
 				.observeOn(schedulerProvider.ui())
 				.subscribe(stateSubject::onNext)
 		)
@@ -40,10 +40,9 @@ abstract class MviLitePresenter<I : MviIntent, S : MviViewState, R : MviResult>(
 	}
 
 	fun states(): Observable<S> {
-		return stateSubject.distinctUntilChanged()
-			.doOnNext { state ->
-				log(state.toLogString())
-			}
+		return stateSubject.doOnNext { state ->
+			log(state.toLogString())
+		}
 	}
 
 	fun currentState(): S {
