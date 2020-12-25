@@ -1,35 +1,32 @@
 package com.app.kaidee.dojo.lesson
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.app.kaidee.dojo.R
-import kotlinx.android.synthetic.main.item_lesson.view.*
+import com.app.kaidee.dojo.databinding.ItemLessonBinding
 
 class LessonListAdapter : ListAdapter<Lesson, LessonListAdapter.LessonViewHolder>(DiffCallBack()) {
 
 	var onItemClickListener: ((Int) -> Unit)? = null
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
-		return LessonViewHolder(
-			LayoutInflater.from(parent.context).inflate(R.layout.item_lesson, parent, false)
-		)
+		val binding = ItemLessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+		return LessonViewHolder(binding)
 	}
 
 	override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
 		holder.bind(getItem(position))
 	}
 
-	inner class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+	inner class LessonViewHolder(private val binding: ItemLessonBinding) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(lesson: Lesson) {
-			with(itemView) {
+			with(binding) {
 				title.text = lesson.title
 				description.text = lesson.description
-				setOnClickListener {
+				root.setOnClickListener {
 					onItemClickListener?.invoke(lesson.navigationId)
 				}
 			}

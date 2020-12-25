@@ -5,7 +5,8 @@ import com.app.kaidee.configuration.ApplicationConfig
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 
-fun Project.setupAndroid() {
+@Suppress("UnstableApiUsage")
+fun Project.setupAndroid(viewBinding: Boolean = false) {
 	extensions.configure(BaseExtension::class.java) {
 		buildToolsVersion(ApplicationConfig.buildToolVersion)
 		compileSdkVersion(ApplicationConfig.targetSdkVersion)
@@ -17,5 +18,6 @@ fun Project.setupAndroid() {
 			sourceCompatibility = JavaVersion.VERSION_1_8
 			targetCompatibility = JavaVersion.VERSION_1_8
 		}
+		buildFeatures.viewBinding = viewBinding
 	}
 }

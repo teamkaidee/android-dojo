@@ -1,11 +1,11 @@
-import com.app.kaidee.configuration.ApplicationConfig
 import com.app.kaidee.configuration.ApplicationBuildVariant
-import com.app.kaidee.extension.appCompat
-import com.app.kaidee.extension.navigationComponent
-import com.app.kaidee.extension.dagger
+import com.app.kaidee.configuration.ApplicationConfig
 import com.app.kaidee.dependencies.Dependencies
-import com.app.kaidee.dependencies.Dependencies.Module.Core as Core
-import com.app.kaidee.dependencies.Dependencies.Module.Feature as Feature
+import com.app.kaidee.dependencies.Dependencies.Module.Core
+import com.app.kaidee.dependencies.Dependencies.Module.Feature
+import com.app.kaidee.extension.appCompat
+import com.app.kaidee.extension.dagger
+import com.app.kaidee.extension.navigationComponent
 
 plugins {
 	id("com.android.application")
@@ -42,6 +42,10 @@ android {
 
 	kotlinOptions {
 		jvmTarget = JavaVersion.VERSION_1_8.toString()
+	}
+
+	buildFeatures {
+		viewBinding = true
 	}
 
 	dynamicFeatures = mutableSetOf(Feature.counter, Feature.endlessScroll)

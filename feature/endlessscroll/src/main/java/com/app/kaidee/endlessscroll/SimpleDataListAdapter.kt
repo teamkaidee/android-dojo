@@ -1,31 +1,31 @@
 package com.app.kaidee.endlessscroll
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.kaidee.endlessscroll.data.SimpleItem
+import com.app.kaidee.endlessscroll.databinding.ItemSimpleDataBinding
 
-class SimpleDataListAdapter :
-	ListAdapter<SimpleItem, RecyclerView.ViewHolder>(AsyncDifferConfig.Builder(SimpleItemDiffCallback()).build()) {
+class SimpleDataListAdapter : ListAdapter<SimpleItem, RecyclerView.ViewHolder>(
+	AsyncDifferConfig.Builder(SimpleItemDiffCallback()).build()
+) {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-		val view = LayoutInflater.from(parent.context).inflate(R.layout.item_simple_data, parent, false)
-		return SimpleDataViewHolder(view)
+		val binding = ItemSimpleDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+		return SimpleDataViewHolder(binding)
 	}
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 		(holder as? SimpleDataViewHolder)?.bind(getItem(position))
 	}
 
-	class SimpleDataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+	class SimpleDataViewHolder(private val binding: ItemSimpleDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
 		fun bind(data: SimpleItem) {
-			itemView.findViewById<TextView>(R.id.textview_display_text)?.text = data.title
+			binding.textviewDisplayText.text = data.title
 		}
 
 	}

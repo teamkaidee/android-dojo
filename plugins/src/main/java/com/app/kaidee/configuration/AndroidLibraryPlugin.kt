@@ -14,7 +14,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
 			pluginManager.apply {
 				apply("com.android.library")
 				apply("kotlin-android")
-				apply("kotlin-android-extensions")
 				apply("kotlin-kapt")
 			}
 			setupAndroid()

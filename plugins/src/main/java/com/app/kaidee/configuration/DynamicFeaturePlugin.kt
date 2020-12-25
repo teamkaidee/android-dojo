@@ -11,10 +11,11 @@ class DynamicFeaturePlugin : Plugin<Project> {
 			pluginManager.apply {
 				apply("com.android.dynamic-feature")
 				apply("kotlin-android")
-				apply("kotlin-android-extensions")
 				apply("kotlin-kapt")
 			}
-			setupAndroid()
+			setupAndroid(
+				viewBinding = true
+			)
 		}
 	}
 
