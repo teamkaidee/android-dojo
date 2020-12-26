@@ -50,6 +50,10 @@ abstract class MviLitePresenter<I : MviIntent, S : MviViewState>(
 		return currentState
 	}
 
+	protected fun currentState(): S {
+		return currentState
+	}
+
 	override fun onCleared() {
 		disposable.clear()
 	}
