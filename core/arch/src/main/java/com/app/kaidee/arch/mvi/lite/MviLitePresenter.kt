@@ -28,7 +28,6 @@ abstract class MviLitePresenter<I : MviIntent, S : MviViewState>(
 		disposable.add(
 			intentSubject.observeOn(schedulerProvider.io())
 				.publish(::process)
-				.distinctUntilChanged()
 				.observeOn(schedulerProvider.ui())
 				.subscribe(stateSubject::onNext)
 		)
@@ -40,17 +39,18 @@ abstract class MviLitePresenter<I : MviIntent, S : MviViewState>(
 	}
 
 	fun states(): Observable<S> {
-		return stateSubject.doOnNext { state ->
-			log(state.toLogString())
-		}
+		return stateSubject.distinctUntilChanged()
+			.doOnNext { state ->
+				log(state.toLogString())
+			}
+	}
+
+	fun currentState(): S {
+		return currentState
 	}
 
 	protected fun setState(reducer: S.() -> S): S {
 		currentState = reducer(currentState)
-		return currentState
-	}
-
-	protected fun currentState(): S {
 		return currentState
 	}
 

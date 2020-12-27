@@ -30,7 +30,7 @@ class EndlessScrollFragment : Fragment(R.layout.fragment_endless_scroll), MviVie
 
 	private val simpleDataListAdapter = SimpleDataListAdapter()
 
-	private lateinit var onScrollListener: EndlessRecyclerOnScrollListener
+	private var onScrollListener: EndlessRecyclerOnScrollListener? = null
 
 	@SuppressLint("CheckResult")
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,9 @@ class EndlessScrollFragment : Fragment(R.layout.fragment_endless_scroll), MviVie
 			.appComponent(App.appComponent)
 			.build()
 			.inject(this)
-		presenter.states().subscribe(::render, ::println)
+		presenter.states().subscribe(::render) {
+			it.printStackTrace()
+		}
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,18 +59,19 @@ class EndlessScrollFragment : Fragment(R.layout.fragment_endless_scroll), MviVie
 			setHasFixedSize(true)
 			onScrollListener = EndlessRecyclerOnScrollListener(layoutManager as LinearLayoutManager) {
 				load(LoadMoreIntent)
+			}.also { listener ->
+				addOnScrollListener(listener)
 			}
-			addOnScrollListener(onScrollListener)
 		}
 	}
 
 	private fun load(intent: Intent) {
-		onScrollListener.disableLoadMore()
+		onScrollListener?.disableLoadMore()
 		presenter.dispatch(intent)
 	}
 
 	override fun render(state: ViewState) {
-		onScrollListener.enableLoadMore()
+		onScrollListener?.enableLoadMore()
 		simpleDataListAdapter.submitList(state.items)
 	}
 
