@@ -2,7 +2,6 @@ package com.app.kaidee.endlessscroll.presentation
 
 import com.app.kaidee.arch.mvi.lite.MviLitePresenter
 import com.app.kaidee.common.rxscheduler.SchedulerProvider
-import com.app.kaidee.endlessscroll.data.SimpleItem
 import com.app.kaidee.endlessscroll.data.SimpleItemRepository
 import com.app.kaidee.endlessscroll.presentation.EndlessScrollResult.Error
 import com.app.kaidee.endlessscroll.presentation.EndlessScrollResult.Success
@@ -62,10 +61,7 @@ class EndlessScrollPresenter @Inject constructor(
 				is Success -> setState {
 					copy(
 						offset = result.offset,
-						items = mutableListOf<SimpleItem>().apply {
-							addAll(items)
-							addAll(result.items)
-						},
+						items = items + result.items,
 						error = null
 					)
 				}
