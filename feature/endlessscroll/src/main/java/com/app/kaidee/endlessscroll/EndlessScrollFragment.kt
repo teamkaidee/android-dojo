@@ -2,13 +2,13 @@ package com.app.kaidee.endlessscroll
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.kaidee.arch.mvi.MviView
+import com.app.kaidee.common.di.factory.ViewModelFactory
 import com.app.kaidee.dojo.App
 import com.app.kaidee.endlessscroll.databinding.FragmentEndlessScrollBinding
 import com.app.kaidee.endlessscroll.di.DaggerEndlessScrollComponent
@@ -22,11 +22,15 @@ import com.app.kaidee.endlessscroll.presentation.EndlessScrollViewState as ViewS
 class EndlessScrollFragment : Fragment(R.layout.fragment_endless_scroll), MviView<Intent, ViewState> {
 
 	@Inject
-	lateinit var presenter: EndlessScrollPresenter
+	lateinit var viewModelFactory: ViewModelFactory
+
+	private val presenter by lazy {
+		ViewModelProvider(this, viewModelFactory).get(EndlessScrollPresenter::class.java)
+	}
 
 	private val simpleDataListAdapter = SimpleDataListAdapter()
 
-	private lateinit var onScrollListener: EndlessRecyclerOnScrollListener
+	private var onScrollListener: EndlessRecyclerOnScrollListener? = null
 
 	@SuppressLint("CheckResult")
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,38 +44,34 @@ class EndlessScrollFragment : Fragment(R.layout.fragment_endless_scroll), MviVie
 		}
 	}
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-		return inflater.inflate(R.layout.fragment_endless_scroll, container, false)
-	}
-
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		with(FragmentEndlessScrollBinding.bind(view)) {
 			setupRecyclerView(recycleviewSimpleData)
 		}
-		onScrollListener.disableLoadMore()
-		presenter.dispatch(InitialIntent)
+		load(InitialIntent)
 	}
 
 	private fun setupRecyclerView(recyclerView: RecyclerView) {
-		with(recyclerView){
+		with(recyclerView) {
 			layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 			adapter = simpleDataListAdapter
 			setHasFixedSize(true)
 			onScrollListener = EndlessRecyclerOnScrollListener(layoutManager as LinearLayoutManager) {
-				loadMore()
+				load(LoadMoreIntent)
+			}.also { listener ->
+				addOnScrollListener(listener)
 			}
-			addOnScrollListener(onScrollListener)
 		}
 	}
 
-	private fun loadMore() {
-		onScrollListener.disableLoadMore()
-		presenter.dispatch(LoadMoreIntent)
+	private fun load(intent: Intent) {
+		onScrollListener?.disableLoadMore()
+		presenter.dispatch(intent)
 	}
 
 	override fun render(state: ViewState) {
-		onScrollListener.enableLoadMore()
+		onScrollListener?.enableLoadMore()
 		simpleDataListAdapter.submitList(state.items)
 	}
 

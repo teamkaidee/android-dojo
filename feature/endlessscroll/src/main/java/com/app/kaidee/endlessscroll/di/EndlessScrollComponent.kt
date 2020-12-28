@@ -7,7 +7,8 @@ import dagger.Component
 
 @Presentation
 @Component(
-		dependencies = [AppComponent::class]
+	dependencies = [AppComponent::class],
+	modules = [EndlessScrollModule::class]
 )
 interface EndlessScrollComponent {
 

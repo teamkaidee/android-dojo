@@ -5,12 +5,8 @@ import com.app.kaidee.endlessscroll.data.SimpleItem
 
 sealed class EndlessScrollResult : MviResult {
 
-	sealed class GetItemsResult : EndlessScrollResult() {
+	data class Success(val offset: Int, val items: List<SimpleItem>) : EndlessScrollResult()
 
-		data class Success(val offset: Int, val items: List<SimpleItem>) : GetItemsResult()
-
-		data class Error(val throwable: Throwable) : GetItemsResult()
-
-	}
+	data class Error(val throwable: Throwable) : EndlessScrollResult()
 
 }
