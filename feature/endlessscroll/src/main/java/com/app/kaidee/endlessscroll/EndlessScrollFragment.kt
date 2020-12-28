@@ -39,8 +39,8 @@ class EndlessScrollFragment : Fragment(R.layout.fragment_endless_scroll), MviVie
 			.appComponent(App.appComponent)
 			.build()
 			.inject(this)
-		presenter.states().subscribe(::render) {
-			it.printStackTrace()
+		presenter.states().subscribe(::render) { e ->
+			e.printStackTrace()
 		}
 	}
 
