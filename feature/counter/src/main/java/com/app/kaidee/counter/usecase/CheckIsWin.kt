@@ -5,13 +5,13 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class CheckIsWin @Inject constructor(
-	private val counterRepository: CounterRepository
+    private val counterRepository: CounterRepository
 ) : (Int) -> Observable<Boolean> {
 
-	override fun invoke(value: Int): Observable<Boolean> {
-		return Observable.fromCallable {
-			counterRepository.isWin(value)
-		}
-	}
+    override fun invoke(value: Int): Observable<Boolean> {
+        return Observable.fromCallable {
+            counterRepository.isWin(value)
+        }
+    }
 
 }

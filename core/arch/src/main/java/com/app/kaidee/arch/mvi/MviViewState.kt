@@ -5,6 +5,6 @@ package com.app.kaidee.arch.mvi
  */
 interface MviViewState {
 
-	fun toLogString(): String
+    fun toLogString(): String
 
 }

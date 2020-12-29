@@ -4,6 +4,6 @@ import com.app.kaidee.arch.mvi.MviIntent
 
 sealed class LessonIntent : MviIntent {
 
-	object InitialIntent : LessonIntent()
+    object InitialIntent : LessonIntent()
 
 }

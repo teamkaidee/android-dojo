@@ -13,12 +13,12 @@ import dagger.multibindings.IntoMap
 @Module
 object LessonModule {
 
-	@Provides
-	@Presentation
-	@IntoMap
-	@ViewModelKey(LessonPresenter::class)
-	fun providePresenter(schedulerProvider: SchedulerProvider, lessonRepository: LessonRepository): ViewModel {
-		return LessonPresenter(schedulerProvider, lessonRepository)
-	}
+    @Provides
+    @Presentation
+    @IntoMap
+    @ViewModelKey(LessonPresenter::class)
+    fun providePresenter(schedulerProvider: SchedulerProvider, lessonRepository: LessonRepository): ViewModel {
+        return LessonPresenter(schedulerProvider, lessonRepository)
+    }
 
 }

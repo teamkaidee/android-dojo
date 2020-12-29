@@ -7,15 +7,15 @@ import javax.inject.Inject
 
 class CounterRouterMapper @Inject constructor() {
 
-	fun mapToRouter(result: CounterResult): CounterRouter {
-		return when (result) {
-			is UpdateValueResult.Win -> {
-				ResultPage
-			}
-			else -> {
-				Stay
-			}
-		}
-	}
+    fun mapToRouter(result: CounterResult): CounterRouter {
+        return when (result) {
+            is UpdateValueResult.Win -> {
+                ResultPage
+            }
+            else -> {
+                Stay
+            }
+        }
+    }
 
 }

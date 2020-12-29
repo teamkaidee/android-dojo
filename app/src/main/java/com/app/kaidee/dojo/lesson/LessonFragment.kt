@@ -20,51 +20,53 @@ import javax.inject.Inject
 
 class LessonFragment : Fragment(R.layout.fragment_lesson), MviView<LessonIntent, LessonViewState> {
 
-	@Inject
-	lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
-	private val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
-	private val presenter: LessonPresenter by viewModels {
-		viewModelFactory
-	}
+    private val presenter: LessonPresenter by viewModels {
+        viewModelFactory
+    }
 
-	private val lessonListAdapter = LessonListAdapter()
+    private val lessonListAdapter = LessonListAdapter()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		DaggerLessonComponent.builder()
-			.appComponent(App.appComponent)
-			.build()
-			.inject(this)
-		disposable.add(presenter.states().subscribe(this::render) { error ->
-			println(error.message)
-		})
-	}
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DaggerLessonComponent.builder()
+            .appComponent(App.appComponent)
+            .build()
+            .inject(this)
+        disposable.add(
+            presenter.states().subscribe(this::render) { error ->
+                println(error.message)
+            }
+        )
+    }
 
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		with(FragmentLessonBinding.bind(view)){
-			with(recycleviewLessons){
-				layoutManager = LinearLayoutManager(context)
-				adapter = lessonListAdapter
-			}
-		}
-		lessonListAdapter.onItemClickListener = { navigationId ->
-			findNavController().navigate(navigationId)
-		}
-		presenter.dispatch(LessonIntent.InitialIntent)
-	}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(FragmentLessonBinding.bind(view)) {
+            with(recycleviewLessons) {
+                layoutManager = LinearLayoutManager(context)
+                adapter = lessonListAdapter
+            }
+        }
+        lessonListAdapter.onItemClickListener = { navigationId ->
+            findNavController().navigate(navigationId)
+        }
+        presenter.dispatch(LessonIntent.InitialIntent)
+    }
 
-	override fun render(state: LessonViewState) {
-		if (state.error == null) {
-			lessonListAdapter.submitList(state.lessons)
-		}
-	}
+    override fun render(state: LessonViewState) {
+        if (state.error == null) {
+            lessonListAdapter.submitList(state.lessons)
+        }
+    }
 
-	override fun onDestroy() {
-		disposable.dispose()
-		super.onDestroy()
-	}
+    override fun onDestroy() {
+        disposable.dispose()
+        super.onDestroy()
+    }
 
 }

@@ -7,19 +7,19 @@ import com.app.kaidee.counter.presentation.CounterResult.UpdateValueResult
 import javax.inject.Inject
 
 class CounterReducerHolder @Inject constructor(
-	private val generateGoalReducer: MviReducer<GenerateGoalResult, CounterViewState>,
-	private val updateValueReducer: MviReducer<UpdateValueResult, CounterViewState>
+    private val generateGoalReducer: MviReducer<GenerateGoalResult, CounterViewState>,
+    private val updateValueReducer: MviReducer<UpdateValueResult, CounterViewState>
 ) : MviReducerHolder<CounterResult, CounterViewState> {
 
-	override fun apply(previousState: CounterViewState, result: CounterResult): CounterViewState {
-		return when (result) {
-			is GenerateGoalResult -> {
-				generateGoalReducer.reduce(result, previousState)
-			}
-			is UpdateValueResult -> {
-				updateValueReducer.reduce(result, previousState)
-			}
-		}
-	}
+    override fun apply(previousState: CounterViewState, result: CounterResult): CounterViewState {
+        return when (result) {
+            is GenerateGoalResult -> {
+                generateGoalReducer.reduce(result, previousState)
+            }
+            is UpdateValueResult -> {
+                updateValueReducer.reduce(result, previousState)
+            }
+        }
+    }
 
 }
