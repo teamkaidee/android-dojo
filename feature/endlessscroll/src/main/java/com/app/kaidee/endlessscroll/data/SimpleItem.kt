@@ -1,5 +1,5 @@
 package com.app.kaidee.endlessscroll.data
 
 data class SimpleItem(
-	val title: String
+    val title: String
 )

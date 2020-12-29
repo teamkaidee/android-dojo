@@ -4,28 +4,28 @@ import com.app.kaidee.arch.mvi.MviViewState
 import com.app.kaidee.dojo.lesson.Lesson
 
 data class LessonViewState(
-	val isLoading: Boolean,
-	val error: Throwable?,
-	val lessons: List<Lesson>
+    val isLoading: Boolean,
+    val error: Throwable?,
+    val lessons: List<Lesson>
 ) : MviViewState {
 
-	override fun toLogString(): String {
-		return StringBuilder()
-			.append("isLoading : $isLoading | ")
-			.append("error : ${error?.message} | ")
-			.append("lessons.size : ${lessons.size}")
-			.toString()
-	}
+    override fun toLogString(): String {
+        return StringBuilder()
+            .append("isLoading : $isLoading | ")
+            .append("error : ${error?.message} | ")
+            .append("lessons.size : ${lessons.size}")
+            .toString()
+    }
 
-	companion object {
+    companion object {
 
-		fun idle(): LessonViewState {
-			return LessonViewState(
-				isLoading = true,
-				error = null,
-				lessons = listOf()
-			)
-		}
-	}
+        fun idle(): LessonViewState {
+            return LessonViewState(
+                isLoading = true,
+                error = null,
+                lessons = listOf()
+            )
+        }
+    }
 
 }

@@ -5,15 +5,15 @@ import com.app.kaidee.extension.navigationComponent
 import com.app.kaidee.extension.unitTest
 
 plugins {
-	id("kaidee-android-feature")
+    id("kaidee-android-feature")
 }
 
 dependencies {
-	implementation(project(Dependencies.Module.app))
-	implementation(Dependencies.App.constraintLayout)
-	appCompat()
-	dagger()
-	navigationComponent()
+    implementation(project(Dependencies.Module.app))
+    implementation(Dependencies.App.constraintLayout)
+    appCompat()
+    dagger()
+    navigationComponent()
 
-	unitTest()
+    unitTest()
 }

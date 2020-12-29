@@ -9,23 +9,23 @@ import io.reactivex.ObservableTransformer
 import javax.inject.Inject
 
 class UpdateValueProcessor @Inject constructor(
-	private val checkIsWin: (Int) -> Observable<Boolean>
+    private val checkIsWin: (Int) -> Observable<Boolean>
 ) : MviProcessor<UpdateValueAction, UpdateValueResult> {
 
-	override fun execute(): ObservableTransformer<UpdateValueAction, UpdateValueResult> {
-		return ObservableTransformer { actions ->
-			actions.flatMap { action ->
-				checkIsWin(action.value).map { isWin ->
-					if (isWin) {
-						Win(action.value)
-					} else {
-						Success(action.value)
-					}
-				}
-			}
-				.cast(UpdateValueResult::class.java)
-				.onErrorReturn(::Failure)
-		}
-	}
+    override fun execute(): ObservableTransformer<UpdateValueAction, UpdateValueResult> {
+        return ObservableTransformer { actions ->
+            actions.flatMap { action ->
+                checkIsWin(action.value).map { isWin ->
+                    if (isWin) {
+                        Win(action.value)
+                    } else {
+                        Success(action.value)
+                    }
+                }
+            }
+                .cast(UpdateValueResult::class.java)
+                .onErrorReturn(::Failure)
+        }
+    }
 
 }

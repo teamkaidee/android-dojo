@@ -4,8 +4,8 @@ import com.app.kaidee.arch.mvi.MviIntent
 
 sealed class EndlessScrollIntent : MviIntent {
 
-	object InitialIntent : EndlessScrollIntent()
+    object InitialIntent : EndlessScrollIntent()
 
-	object LoadMoreIntent : EndlessScrollIntent()
+    object LoadMoreIntent : EndlessScrollIntent()
 
 }

@@ -7,10 +7,10 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-	modules = [AppModule::class]
+    modules = [AppModule::class]
 )
 interface AppComponent {
 
-	fun provideSchedulerProvider(): SchedulerProvider
+    fun provideSchedulerProvider(): SchedulerProvider
 
 }

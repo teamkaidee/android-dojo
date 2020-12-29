@@ -6,17 +6,17 @@ import org.gradle.api.Project
 
 class DynamicFeaturePlugin : Plugin<Project> {
 
-	override fun apply(target: Project) {
-		with(target) {
-			pluginManager.apply {
-				apply("com.android.dynamic-feature")
-				apply("kotlin-android")
-				apply("kotlin-kapt")
-			}
-			setupAndroid(
-				viewBinding = true
-			)
-		}
-	}
+    override fun apply(target: Project) {
+        with(target) {
+            pluginManager.apply {
+                apply("com.android.dynamic-feature")
+                apply("kotlin-android")
+                apply("kotlin-kapt")
+            }
+            setupAndroid(
+                viewBinding = true
+            )
+        }
+    }
 
 }

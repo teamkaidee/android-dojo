@@ -7,11 +7,11 @@ import dagger.Component
 
 @Presentation
 @Component(
-	dependencies = [AppComponent::class],
-	modules = [EndlessScrollModule::class]
+    dependencies = [AppComponent::class],
+    modules = [EndlessScrollModule::class]
 )
 interface EndlessScrollComponent {
 
-	fun inject(fragment: EndlessScrollFragment)
+    fun inject(fragment: EndlessScrollFragment)
 
 }

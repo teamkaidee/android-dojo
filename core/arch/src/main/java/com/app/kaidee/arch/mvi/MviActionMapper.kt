@@ -7,6 +7,6 @@ package com.app.kaidee.arch.mvi
  * */
 interface MviActionMapper<in I : MviIntent, in S : MviViewState, out A : MviAction> {
 
-	fun mapToAction(intent: I, currentState: S): A
+    fun mapToAction(intent: I, currentState: S): A
 
 }
