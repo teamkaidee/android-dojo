@@ -34,8 +34,9 @@ class EndlessScrollPresenter @Inject constructor(
 
     @JvmName("processInitialIntent")
     private fun Observable<Intent.InitialIntent>.processIntent(): Observable<Result> {
+        val offset = 0
         return flatMap {
-            getItems(0)
+            getItems(offset)
         }
     }
     // endregion
@@ -77,7 +78,8 @@ class EndlessScrollPresenter @Inject constructor(
     }
 
     private fun getItems(offset: Int): Observable<Result> {
-        return repository.getItems(offset, 15)
+        val limit = 15
+        return repository.getItems(offset, limit)
             .map { result ->
                 Success(
                     offset + 1,

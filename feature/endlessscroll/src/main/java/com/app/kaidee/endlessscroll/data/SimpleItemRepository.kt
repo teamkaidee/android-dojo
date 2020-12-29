@@ -8,7 +8,8 @@ class SimpleItemRepository @Inject constructor() {
     private val simpleItems = mutableListOf<SimpleItem>()
 
     init {
-        repeat(100) { index ->
+        val times = 100
+        repeat(times) { index ->
             simpleItems.add(SimpleItem("Item : $index"))
         }
     }

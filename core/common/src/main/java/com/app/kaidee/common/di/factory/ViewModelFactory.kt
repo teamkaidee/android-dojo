@@ -15,11 +15,7 @@ class ViewModelFactory @Inject constructor(
         val creator = viewModelsMap[modelClass] ?: viewModelsMap.asIterable().firstOrNull {
             modelClass.isAssignableFrom(it.key)
         }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
-        return try {
-            creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
+        return creator.get() as T
     }
 
 }
