@@ -11,10 +11,12 @@ class CounterRepositoryImpl @Inject constructor() : CounterRepository {
 
     override fun generateGameSession(): Pair<Int, Int> {
         currentValue = 0
-        currentGoal = Random.nextInt(1, 5)
+        val from = 1
+        val until = 5
+        currentGoal = Random.nextInt(from, until)
 
         do {
-            currentValue = Random.nextInt(1, 5)
+            currentValue = Random.nextInt(from, until)
         } while (currentValue == currentGoal)
 
         return Pair(currentGoal, currentValue)
