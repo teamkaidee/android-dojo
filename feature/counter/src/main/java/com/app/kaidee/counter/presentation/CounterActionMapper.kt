@@ -8,18 +8,18 @@ import javax.inject.Inject
 
 class CounterActionMapper @Inject constructor() : MviActionMapper<CounterIntent, CounterViewState, CounterAction> {
 
-	override fun mapToAction(intent: CounterIntent, currentState: CounterViewState): CounterAction {
-		return when (intent) {
-			is InitialIntent -> {
-				GenerateGoalAction
-			}
-			is IncreaseIntent -> {
-				UpdateValueAction(1)
-			}
-			is DecreaseIntent -> {
-				UpdateValueAction(-1)
-			}
-		}
-	}
+    override fun mapToAction(intent: CounterIntent, currentState: CounterViewState): CounterAction {
+        return when (intent) {
+            is InitialIntent -> {
+                GenerateGoalAction
+            }
+            is IncreaseIntent -> {
+                UpdateValueAction(1)
+            }
+            is DecreaseIntent -> {
+                UpdateValueAction(-1)
+            }
+        }
+    }
 
 }

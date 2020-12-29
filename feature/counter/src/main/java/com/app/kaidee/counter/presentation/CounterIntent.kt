@@ -4,10 +4,10 @@ import com.app.kaidee.arch.mvi.MviIntent
 
 sealed class CounterIntent : MviIntent {
 
-	object InitialIntent : CounterIntent()
+    object InitialIntent : CounterIntent()
 
-	object IncreaseIntent : CounterIntent()
+    object IncreaseIntent : CounterIntent()
 
-	object DecreaseIntent : CounterIntent()
+    object DecreaseIntent : CounterIntent()
 
 }

@@ -11,11 +11,11 @@ import javax.inject.Singleton
 @Module
 abstract class AppModule {
 
-	@Binds
-	@Singleton
-	abstract fun bindSchedulerProvider(impl: DefaultSchedulerProvider): SchedulerProvider
+    @Binds
+    @Singleton
+    abstract fun bindSchedulerProvider(impl: DefaultSchedulerProvider): SchedulerProvider
 
-	@Binds
-	abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }

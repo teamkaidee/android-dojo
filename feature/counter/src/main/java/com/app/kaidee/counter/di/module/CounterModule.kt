@@ -27,54 +27,54 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class CounterModule {
 
-	@Binds
-	@Presentation
-	abstract fun bindCounterRepository(impl: CounterRepositoryImpl): CounterRepository
+    @Binds
+    @Presentation
+    abstract fun bindCounterRepository(impl: CounterRepositoryImpl): CounterRepository
 
-	@Binds
-	abstract fun bindGenerateGoalReducer(impl: GenerateGoalReducer): MviReducer<GenerateGoalResult, CounterViewState>
+    @Binds
+    abstract fun bindGenerateGoalReducer(impl: GenerateGoalReducer): MviReducer<GenerateGoalResult, CounterViewState>
 
-	@Binds
-	abstract fun bindUpdateValueReducer(impl: UpdateValueReducer): MviReducer<UpdateValueResult, CounterViewState>
+    @Binds
+    abstract fun bindUpdateValueReducer(impl: UpdateValueReducer): MviReducer<UpdateValueResult, CounterViewState>
 
-	@Module
-	companion object {
+    @Module
+    companion object {
 
-		@Provides
-		fun provideGenerateGoalProcessor(
-        generateGameSession: GenerateGameSession
-    ): MviProcessor<GenerateGoalAction, GenerateGoalResult> {
-			return GenerateGoalProcessor(generateGameSession)
-		}
+        @Provides
+        fun provideGenerateGoalProcessor(
+            generateGameSession: GenerateGameSession
+        ): MviProcessor<GenerateGoalAction, GenerateGoalResult> {
+            return GenerateGoalProcessor(generateGameSession)
+        }
 
-		@Provides
-		fun provideUpdateValueProcessor(
-        checkIsWin: CheckIsWin
-    ): MviProcessor<UpdateValueAction, UpdateValueResult> {
-			return UpdateValueProcessor(checkIsWin)
-		}
+        @Provides
+        fun provideUpdateValueProcessor(
+            checkIsWin: CheckIsWin
+        ): MviProcessor<UpdateValueAction, UpdateValueResult> {
+            return UpdateValueProcessor(checkIsWin)
+        }
 
-		@Provides
-		@Presentation
-		@IntoMap
-		@ViewModelKey(CounterPresenter::class)
-		fun provideCounterPresenter(
-        schedulerProvider: SchedulerProvider,
-        processorHolder: CounterProcessorHolder,
-        reducerHolder: CounterReducerHolder,
-        actionMapper: CounterActionMapper,
-        routerMapper: CounterRouterMapper
-    ): ViewModel {
-			return CounterPresenter(
-          initialState = CounterViewState.idle(),
-          schedulerProvider = schedulerProvider,
-          processorHolder = processorHolder,
-          reducerHolder = reducerHolder,
-          actionMapper = actionMapper,
-          routerMapper = routerMapper
-      )
-		}
+        @Provides
+        @Presentation
+        @IntoMap
+        @ViewModelKey(CounterPresenter::class)
+        fun provideCounterPresenter(
+            schedulerProvider: SchedulerProvider,
+            processorHolder: CounterProcessorHolder,
+            reducerHolder: CounterReducerHolder,
+            actionMapper: CounterActionMapper,
+            routerMapper: CounterRouterMapper
+        ): ViewModel {
+            return CounterPresenter(
+                initialState = CounterViewState.idle(),
+                schedulerProvider = schedulerProvider,
+                processorHolder = processorHolder,
+                reducerHolder = reducerHolder,
+                actionMapper = actionMapper,
+                routerMapper = routerMapper
+            )
+        }
 
-	}
+    }
 
 }

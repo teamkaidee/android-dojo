@@ -12,62 +12,62 @@ import io.reactivex.subjects.PublishSubject
 
 @SuppressLint("CheckResult")
 abstract class MviLitePresenter<I : MviIntent, S : MviViewState>(
-	initialState: S,
-	schedulerProvider: SchedulerProvider
+    initialState: S,
+    schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
-	private var currentState = initialState
+    private var currentState = initialState
 
-	private val intentSubject = PublishSubject.create<I>()
+    private val intentSubject = PublishSubject.create<I>()
 
-	private val stateSubject = BehaviorSubject.createDefault(initialState)
+    private val stateSubject = BehaviorSubject.createDefault(initialState)
 
-	private val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
-	init {
-		disposable.add(
-			intentSubject.observeOn(schedulerProvider.io())
-				.publish(::process)
-				.observeOn(schedulerProvider.ui())
-				.subscribe(stateSubject::onNext)
-		)
-	}
+    init {
+        disposable.add(
+            intentSubject.observeOn(schedulerProvider.io())
+                .publish(::process)
+                .observeOn(schedulerProvider.ui())
+                .subscribe(stateSubject::onNext)
+        )
+    }
 
-	fun dispatch(intent: I) {
-		log("Dispatch : ${intent::class.java.simpleName}")
-		intentSubject.onNext(intent)
-	}
+    fun dispatch(intent: I) {
+        log("Dispatch : ${intent::class.java.simpleName}")
+        intentSubject.onNext(intent)
+    }
 
-	fun states(): Observable<S> {
-		return stateSubject.distinctUntilChanged()
-			.doOnNext { state ->
-				log(state.toLogString())
-			}
-	}
+    fun states(): Observable<S> {
+        return stateSubject.distinctUntilChanged()
+            .doOnNext { state ->
+                log(state.toLogString())
+            }
+    }
 
-	fun currentState(): S {
-		return currentState
-	}
+    fun currentState(): S {
+        return currentState
+    }
 
-	protected fun setState(reducer: S.() -> S): S {
-		currentState = reducer(currentState)
-		return currentState
-	}
+    protected fun setState(reducer: S.() -> S): S {
+        currentState = reducer(currentState)
+        return currentState
+    }
 
-	override fun onCleared() {
-		disposable.clear()
-	}
+    override fun onCleared() {
+        disposable.clear()
+    }
 
-	private fun process(intents: Observable<I>): Observable<S> {
-		return Observable.merge(
-			processorHolder(intents)
-		)
-	}
+    private fun process(intents: Observable<I>): Observable<S> {
+        return Observable.merge(
+            processorHolder(intents)
+        )
+    }
 
-	abstract fun processorHolder(intents: Observable<I>): List<Observable<S>>
+    abstract fun processorHolder(intents: Observable<I>): List<Observable<S>>
 
-	protected inline fun <reified R> Observable<*>.filterIsInstance(): Observable<R> = ofType(R::class.java)
+    protected inline fun <reified R> Observable<*>.filterIsInstance(): Observable<R> = ofType(R::class.java)
 
-	protected open fun log(message: String) = println(message)
+    protected open fun log(message: String) = println(message)
 
 }

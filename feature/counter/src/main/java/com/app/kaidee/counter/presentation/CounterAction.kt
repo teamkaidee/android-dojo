@@ -4,8 +4,8 @@ import com.app.kaidee.arch.mvi.MviAction
 
 sealed class CounterAction : MviAction {
 
-	object GenerateGoalAction : CounterAction()
+    object GenerateGoalAction : CounterAction()
 
-	data class UpdateValueAction(val value: Int) : CounterAction()
+    data class UpdateValueAction(val value: Int) : CounterAction()
 
 }

@@ -10,9 +10,9 @@ package com.app.kaidee.arch.mvi
  */
 interface MviView<I : MviIntent, in S : MviViewState> {
 
-	/**
-	 * Entry point for the [MviView] to render itself based on a [MviViewState].
-	 */
-	fun render(state: S)
+    /**
+     * Entry point for the [MviView] to render itself based on a [MviViewState].
+     */
+    fun render(state: S)
 
 }

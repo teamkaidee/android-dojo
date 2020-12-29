@@ -13,12 +13,12 @@ import dagger.multibindings.IntoMap
 @Module
 object EndlessScrollModule {
 
-	@Provides
-	@Presentation
-	@IntoMap
-	@ViewModelKey(EndlessScrollPresenter::class)
-	fun providePresenter(schedulerProvider: SchedulerProvider, repository: SimpleItemRepository): ViewModel {
-		return EndlessScrollPresenter(schedulerProvider, repository)
-	}
+    @Provides
+    @Presentation
+    @IntoMap
+    @ViewModelKey(EndlessScrollPresenter::class)
+    fun providePresenter(schedulerProvider: SchedulerProvider, repository: SimpleItemRepository): ViewModel {
+        return EndlessScrollPresenter(schedulerProvider, repository)
+    }
 
 }

@@ -8,6 +8,6 @@ package com.app.kaidee.arch.mvi
  * */
 interface MviReducer<R : MviResult, S : MviViewState> {
 
-	fun reduce(result: R, previousState: S): S
+    fun reduce(result: R, previousState: S): S
 
 }

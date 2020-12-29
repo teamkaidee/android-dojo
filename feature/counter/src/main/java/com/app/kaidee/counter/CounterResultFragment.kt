@@ -9,20 +9,20 @@ import com.app.kaidee.dojo.R as appRes
 
 class CounterResultFragment : Fragment(R.layout.fragment_counter_result) {
 
-	private val navController by lazy {
-		findNavController()
-	}
+    private val navController by lazy {
+        findNavController()
+    }
 
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-		with(FragmentCounterResultBinding.bind(view)) {
-			buttonPlayAgain.setOnClickListener {
-				navController.navigate(appRes.id.action_result_to_counter)
-			}
-			buttonLesson.setOnClickListener {
-				navController.navigate(appRes.id.action_result_to_lesson)
-			}
-		}
-	}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(FragmentCounterResultBinding.bind(view)) {
+            buttonPlayAgain.setOnClickListener {
+                navController.navigate(appRes.id.action_result_to_counter)
+            }
+            buttonLesson.setOnClickListener {
+                navController.navigate(appRes.id.action_result_to_lesson)
+            }
+        }
+    }
 
 }

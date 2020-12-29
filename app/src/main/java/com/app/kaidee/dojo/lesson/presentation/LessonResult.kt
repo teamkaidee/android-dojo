@@ -5,12 +5,12 @@ import com.app.kaidee.dojo.lesson.Lesson
 
 sealed class LessonResult : MviResult {
 
-	sealed class LoadLessonResult : LessonResult() {
+    sealed class LoadLessonResult : LessonResult() {
 
-		object Loading : LoadLessonResult()
+        object Loading : LoadLessonResult()
 
-		data class Success(val lessons: List<Lesson>) : LoadLessonResult()
+        data class Success(val lessons: List<Lesson>) : LoadLessonResult()
 
-	}
+    }
 
 }

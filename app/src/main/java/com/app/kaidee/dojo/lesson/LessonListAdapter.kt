@@ -9,41 +9,41 @@ import com.app.kaidee.dojo.databinding.ItemLessonBinding
 
 class LessonListAdapter : ListAdapter<Lesson, LessonListAdapter.LessonViewHolder>(DiffCallBack()) {
 
-	var onItemClickListener: ((Int) -> Unit)? = null
+    var onItemClickListener: ((Int) -> Unit)? = null
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
-		val binding = ItemLessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-		return LessonViewHolder(binding)
-	}
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
+        val binding = ItemLessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return LessonViewHolder(binding)
+    }
 
-	override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
-		holder.bind(getItem(position))
-	}
+    override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
 
-	inner class LessonViewHolder(private val binding: ItemLessonBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class LessonViewHolder(private val binding: ItemLessonBinding) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bind(lesson: Lesson) {
-			with(binding) {
-				title.text = lesson.title
-				description.text = lesson.description
-				root.setOnClickListener {
-					onItemClickListener?.invoke(lesson.navigationId)
-				}
-			}
-		}
+        fun bind(lesson: Lesson) {
+            with(binding) {
+                title.text = lesson.title
+                description.text = lesson.description
+                root.setOnClickListener {
+                    onItemClickListener?.invoke(lesson.navigationId)
+                }
+            }
+        }
 
-	}
+    }
 
-	class DiffCallBack : DiffUtil.ItemCallback<Lesson>() {
+    class DiffCallBack : DiffUtil.ItemCallback<Lesson>() {
 
-		override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
-			return oldItem == newItem
-		}
+        override fun areItemsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
+            return oldItem == newItem
+        }
 
-		override fun areContentsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
-			return oldItem == newItem
-		}
+        override fun areContentsTheSame(oldItem: Lesson, newItem: Lesson): Boolean {
+            return oldItem == newItem
+        }
 
-	}
+    }
 
 }

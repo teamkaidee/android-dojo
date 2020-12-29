@@ -12,23 +12,23 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class GenerateGameSessionTest {
 
-	@Mock
-	lateinit var counterRepository: CounterRepository
+    @Mock
+    lateinit var counterRepository: CounterRepository
 
-	@InjectMocks
-	lateinit var userCase: GenerateGameSession
+    @InjectMocks
+    lateinit var userCase: GenerateGameSession
 
-	@Test
-	fun `When generate game session success`() {
-		// GIVEN
-		val result = Pair(0, 0)
-		whenever(counterRepository.generateGameSession()).doReturn(result)
+    @Test
+    fun `When generate game session success`() {
+        // GIVEN
+        val result = Pair(0, 0)
+        whenever(counterRepository.generateGameSession()).doReturn(result)
 
-		// WHEN
-		val testObserver = userCase().test()
+        // WHEN
+        val testObserver = userCase().test()
 
-		// THEN
-		testObserver.assertValue(result)
-	}
+        // THEN
+        testObserver.assertValue(result)
+    }
 
 }
